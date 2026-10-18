@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="data:," />
+  <link rel="canonical" href="https://myplanschanged.com" />
+  <title>Changed Plans – Buy &amp; Sell Last-Minute Tickets at Face Value</title>
+  <meta name="description" content="Changed Plans is a peer-to-peer exchange for buying and selling last-minute tickets at face value, from concerts and sports to theater and festivals." />
+  <meta property="og:title" content="Changed Plans – Buy &amp; Sell Last-Minute Tickets at Face Value" />
+  <meta property="og:description" content="Buy and sell last-minute event tickets through a peer-to-peer exchange built around fair, face-value resale." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://myplanschanged.com" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Changed Plans – Buy &amp; Sell Last-Minute Tickets at Face Value" />
+  <meta name="twitter:description" content="Buy and sell last-minute event tickets through a peer-to-peer exchange built around fair, face-value resale." />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+    :root{
+      color-scheme:light dark;
+      --paper:#fffaf2;--ink:#13233a;--muted:#596575;--line:#d9d4ca;--card:#ffffff;
+      --red:#e84f3d;--red-dark:#bd3425;--yellow:#f5c84b;--navy:#173a5e;--mint:#dff2e8;
+      --shadow:0 12px 32px rgba(35,37,43,.11);--radius:18px;
+    }
+    @media(prefers-color-scheme:dark){
+      :root{--paper:#111820;--ink:#f7f3ea;--muted:#b7c0ca;--line:#34404c;--card:#19232e;--red:#ff6b59;--red-dark:#ff897a;--yellow:#f5cb5c;--navy:#99c8f2;--mint:#19392f;--shadow:0 14px 34px rgba(0,0,0,.28)}
+    }
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--paper);color:var(--ink);font-family:"DM Sans",sans-serif;line-height:1.5} button,input,select{font:inherit} button,a{touch-action:manipulation} a{color:inherit}
+    .topbar{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--paper) 92%,transparent);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+    .nav{max-width:1180px;margin:auto;padding:12px 22px;display:flex;align-items:center;justify-content:flex-end;gap:6px}.nav button{border:0;background:transparent;color:var(--muted);padding:10px 13px;border-radius:9px;font-weight:600;cursor:pointer}.nav button:hover,.nav button.active{background:var(--card);color:var(--ink)}.nav .sell-nav{background:var(--ink);color:var(--paper);margin-left:8px}.nav .sell-nav:hover{background:var(--red);color:white}
+    main{overflow:hidden}.page{display:none}.page.active{display:block}.wrap{max-width:1180px;margin:auto;padding:0 24px}
+    .hero{position:relative;padding:78px 0 64px}.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:center}.hero h1{font-size:clamp(3.3rem,7vw,6.8rem);line-height:.91;letter-spacing:-.065em;margin:0 0 28px;max-width:760px}.hero h1 em{font-style:normal;color:var(--red)}.lead{font-size:1.18rem;max-width:600px;color:var(--muted);margin:0 0 30px}.searchbar{background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);padding:9px;display:grid;grid-template-columns:1fr auto;gap:8px;border-radius:15px}.searchbar input{border:0;background:transparent;color:var(--ink);min-width:0;padding:11px 14px;outline:none}.primary{border:0;background:var(--red);color:white;font-weight:700;padding:13px 20px;border-radius:10px;cursor:pointer}.primary:hover{background:var(--red-dark)}.secondary{border:1px solid var(--line);background:var(--card);color:var(--ink);font-weight:700;padding:12px 18px;border-radius:10px;cursor:pointer}.micro{font-family:"IBM Plex Mono",monospace;font-size:.75rem;letter-spacing:.02em;color:var(--muted)}
+    .ticket-hero{transform:rotate(3deg);background:var(--yellow);color:#17243a;padding:30px;border-radius:18px;box-shadow:18px 20px 0 var(--ink);position:relative;overflow:hidden}.ticket-hero:before,.ticket-hero:after{content:"";position:absolute;width:34px;height:34px;border-radius:50%;background:var(--paper);left:-17px}.ticket-hero:before{top:38%}.ticket-hero:after{bottom:16%}.ticket-hero .dash{border-bottom:2px dashed rgba(19,35,58,.35);margin:25px -30px}.ticket-hero .date{font:600 .8rem "IBM Plex Mono",monospace}.ticket-hero h2{font-size:2.2rem;line-height:1.05;margin:16px 0}.ticket-hero .seat{display:flex;justify-content:space-between;font-weight:700}.ticket-hero .stamp{position:absolute;right:22px;top:22px;border:2px solid var(--red);color:var(--red);padding:6px 9px;transform:rotate(8deg);font:600 .68rem "IBM Plex Mono",monospace}
+    section{padding:68px 0}.section-head{display:flex;justify-content:space-between;gap:24px;align-items:end;margin-bottom:27px}.section-head h2{font-size:clamp(2rem,4vw,3.3rem);letter-spacing:-.045em;line-height:1;margin:0}.section-head p{max-width:480px;color:var(--muted);margin:0}.categories{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.cat{border:1px solid var(--line);background:var(--card);padding:24px 20px;text-align:left;color:var(--ink);cursor:pointer;min-height:150px;display:flex;flex-direction:column;justify-content:space-between;border-radius:14px}.cat:hover{border-color:var(--red)}.cat svg{width:32px;height:32px;stroke:var(--red);fill:none;stroke-width:1.8}.cat strong{font-size:1.12rem}.cat span{color:var(--muted);font-size:.88rem}
+    .notice{border:1px solid color-mix(in srgb,var(--yellow) 65%,var(--line));background:color-mix(in srgb,var(--yellow) 19%,var(--card));padding:14px 16px;border-radius:10px;color:var(--ink);margin-bottom:22px}.notice strong{font-weight:700}
+    .live-feature{display:grid;grid-template-columns:1.25fr .75fr;background:var(--card);border:1px solid var(--line);box-shadow:8px 8px 0 var(--yellow);border-radius:16px;overflow:hidden;margin-bottom:34px}.live-art{background:#22577a;color:white;padding:28px;position:relative;overflow:hidden}.live-art:after{content:"";position:absolute;width:150px;height:150px;border:26px solid rgba(255,255,255,.13);border-radius:50%;right:-35px;top:-55px}.live-art h3{font-size:clamp(1.65rem,3vw,2.55rem);line-height:1.02;letter-spacing:-.035em;margin:15px 0 12px;max-width:640px}.live-art p{margin:0;position:relative;z-index:1}.live-badge{display:inline-flex;align-items:center;font:600 .7rem "IBM Plex Mono",monospace;letter-spacing:.06em;background:var(--red);color:white;padding:6px 8px;border-radius:5px;position:relative;z-index:1}.live-body{padding:26px;display:flex;flex-direction:column;justify-content:space-between;gap:22px}.live-body p{margin:0}.live-details{display:grid;gap:7px;color:var(--muted)}.live-price strong{font-size:2rem;line-height:1}.live-price s{color:var(--muted);margin-left:6px}.live-contact{display:inline-flex;align-items:center;justify-content:center;text-align:center;text-decoration:none}.live-card{box-shadow:inset 0 5px 0 var(--yellow)}.live-card .listing-art{padding-top:30px}.live-card .live-badge{position:absolute;left:18px;top:14px}.live-card .listing-body{background:color-mix(in srgb,var(--yellow) 8%,var(--card))}
+    .founding{background:var(--ink);color:var(--paper);border-top:6px solid var(--yellow);border-bottom:6px solid var(--yellow)}.founding-layout{display:grid;grid-template-columns:1.08fr .92fr;gap:56px;align-items:center}.founding h2{font-size:clamp(2.5rem,5vw,4.7rem);line-height:.96;letter-spacing:-.055em;margin:10px 0 20px}.founding-copy{font-size:1.08rem;max-width:620px;color:color-mix(in srgb,var(--paper) 78%,transparent)}.founding-offer{display:inline-block;margin-top:8px;padding:9px 12px;background:var(--yellow);color:#17243a;border-radius:7px;font-weight:700}.founding-form{background:var(--card);color:var(--ink);padding:25px;border-radius:14px}.founding-form h3{font-size:1.45rem;margin:0 0 6px}.founding-form p{color:var(--muted);margin:0 0 17px}.founding-fields{display:grid;grid-template-columns:1fr auto;gap:9px}.founding-fields input{min-width:0;width:100%;padding:12px;background:var(--paper);border:1px solid var(--line);color:var(--ink);border-radius:8px}.hp{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap!important}.inline-status{margin:14px 0 0!important;color:var(--ink)!important}.inline-status[hidden]{display:none}.relay-fallback{color:var(--red-dark);font-weight:700}
+    .listing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.listing{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;cursor:pointer;transition:transform .18s,box-shadow .18s}.listing:hover{transform:translateY(-3px);box-shadow:var(--shadow)}.listing-art{height:150px;padding:18px;position:relative;display:flex;align-items:flex-end;overflow:hidden}.listing-art:after{content:"";position:absolute;width:95px;height:95px;border:20px solid rgba(255,255,255,.22);border-radius:50%;right:-20px;top:-28px}.listing-art.sports{background:#22577a;color:white}.listing-art.concerts{background:#b93b32;color:white}.listing-art.theater{background:#6d4b76;color:white}.listing-art.festivals{background:#2d6a4f;color:white}.listing-art .category-label{font:600 .72rem "IBM Plex Mono",monospace;text-transform:uppercase;letter-spacing:.06em}.listing-body{padding:18px}.listing h3{font-size:1.12rem;line-height:1.25;margin:0 0 8px}.meta{font-size:.87rem;color:var(--muted);margin:4px 0}.listing-foot{display:flex;justify-content:space-between;align-items:end;margin-top:17px}.price strong{font-size:1.35rem}.price small{display:block;color:var(--muted)}.badge{display:inline-flex;align-items:center;font:600 .67rem "IBM Plex Mono",monospace;text-transform:uppercase;padding:5px 7px;border-radius:5px;background:var(--mint);color:color-mix(in srgb,#12543b 90%,var(--ink))}@media(prefers-color-scheme:dark){.badge{color:#a8e7cd}}
+    .how{background:var(--ink);color:var(--paper)}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:38px}.step{padding:10px 44px 10px 0;position:relative}.step+.step{border-left:1px solid color-mix(in srgb,var(--paper) 24%,transparent);padding-left:44px}.step .num{font:600 3rem "IBM Plex Mono",monospace;color:var(--yellow);line-height:1}.step h3{font-size:1.35rem;margin:13px 0 7px}.step p{color:color-mix(in srgb,var(--paper) 72%,transparent);margin:0}
+    .trust-grid{display:grid;grid-template-columns:1fr 1fr;gap:55px;align-items:center}.promise{font-size:clamp(2.5rem,5vw,5rem);letter-spacing:-.055em;line-height:.96;margin:0}.trust-list{display:grid;gap:0}.trust-item{padding:19px 0;border-bottom:1px solid var(--line)}.trust-item:first-child{border-top:1px solid var(--line)}.trust-item strong{display:block;font-size:1.08rem}.trust-item span{color:var(--muted)}
+    .venue{background:var(--yellow);color:#17243a;border-radius:24px;margin:50px auto;padding:52px;display:grid;grid-template-columns:1.2fr .8fr;gap:42px;align-items:center}.venue h2{font-size:clamp(2.2rem,4vw,4rem);line-height:1;letter-spacing:-.05em;margin:0 0 18px}.venue p{font-size:1.08rem}.venue .venue-card{background:#fff9e9;border:2px dashed #17243a;padding:24px;border-radius:12px}.venue ul{padding-left:20px;margin:0}.venue li+li{margin-top:10px}
+    .browse-head{padding:52px 0 24px}.browse-head h2,.form-page h2{font-size:clamp(2.7rem,6vw,5rem);letter-spacing:-.055em;line-height:.95;margin:0 0 16px}.filter-panel{background:var(--card);border:1px solid var(--line);padding:18px;border-radius:14px;display:grid;grid-template-columns:2fr repeat(4,1fr);gap:11px;margin-bottom:26px}.field label{display:block;font-size:.72rem;font-weight:700;color:var(--muted);margin:0 0 5px}.field input,.field select{width:100%;background:var(--paper);color:var(--ink);border:1px solid var(--line);padding:10px;border-radius:8px}.toggle-wrap{display:flex;align-items:end}.toggle-btn{width:100%;border:1px solid var(--line);background:var(--paper);color:var(--muted);padding:10px;border-radius:8px;cursor:pointer}.toggle-btn.on{background:var(--mint);color:var(--ink);border-color:transparent}.results-row{display:flex;justify-content:space-between;margin-bottom:15px}.empty{grid-column:1/-1;text-align:center;padding:60px;border:1px dashed var(--line);color:var(--muted)}
+    .form-page{padding:54px 0 80px}.form-layout{display:grid;grid-template-columns:1fr .7fr;gap:44px}.form-card{background:var(--card);border:1px solid var(--line);padding:28px;border-radius:16px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.form-grid .wide{grid-column:1/-1}.form-card label{display:block;font-weight:700;font-size:.82rem;margin:0 0 6px}.form-card input,.form-card select,.form-card textarea{width:100%;padding:12px;background:var(--paper);border:1px solid var(--line);color:var(--ink);border-radius:8px}.form-card textarea{min-height:95px;resize:vertical}.form-note{background:color-mix(in srgb,var(--yellow) 18%,var(--card));padding:22px;border-radius:12px;align-self:start}.form-note h3{margin-top:0}.form-note p,.form-note li{color:var(--muted)}.checkline{display:flex!important;gap:10px;align-items:flex-start}.checkline input{width:auto;margin-top:5px}.success-box{padding:40px 20px;text-align:center}.success-box h2{font-size:2rem;margin-bottom:8px}
+    .detail{padding:48px 0 80px}.back{border:0;background:transparent;color:var(--muted);padding:8px 0;cursor:pointer;font-weight:700}.detail-grid{display:grid;grid-template-columns:1.15fr .65fr;gap:38px;margin-top:20px}.detail-main h2{font-size:clamp(2.6rem,5vw,4.8rem);letter-spacing:-.05em;line-height:.98;margin:15px 0 18px}.detail-art{height:230px;border-radius:18px;padding:25px;display:flex;align-items:end;color:white}.detail-art .category-label{font:600 .78rem "IBM Plex Mono",monospace}.info-lines{margin-top:26px;border-top:1px solid var(--line)}.info-line{display:grid;grid-template-columns:120px 1fr;padding:14px 0;border-bottom:1px solid var(--line)}.info-line span:first-child{color:var(--muted)}.checkout-card{background:var(--card);border:1px solid var(--line);padding:25px;border-radius:16px;position:sticky;top:82px}.checkout-card h3{font-size:1.4rem;margin-top:0}.qty-row,.fee-row,.total-row{display:flex;justify-content:space-between;gap:15px;padding:11px 0}.fee-row{color:var(--muted)}.total-row{border-top:1px solid var(--line);font-weight:700;font-size:1.1rem}.seller{margin-top:18px;padding-top:18px;border-top:1px dashed var(--line)}.seller strong{display:block}.full{width:100%;margin-top:15px}.demo-flag{text-align:center;font-size:.76rem;color:var(--muted);margin:9px 0 0}
+    dialog{width:min(520px,calc(100% - 28px));border:1px solid var(--line);border-radius:18px;background:var(--card);color:var(--ink);padding:0;box-shadow:0 25px 80px rgba(0,0,0,.35)}dialog::backdrop{background:rgba(8,15,23,.66)}.modal{padding:28px}.modal h2{font-size:2rem;line-height:1.05;margin:0 0 12px}.modal-actions{display:flex;gap:10px;margin-top:22px}.modal-actions>*{flex:1}.confirmation{text-align:center}.confirmation .mark{width:64px;height:64px;margin:0 auto 18px;border-radius:50%;background:var(--mint);display:grid;place-items:center;font-size:1.8rem}.close-x{float:right;border:0;background:transparent;color:var(--muted);font-size:1.5rem;cursor:pointer}
+    footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:.85rem}.footer-row{display:flex;justify-content:space-between;gap:25px}.footer-row a{text-decoration:none;font-weight:700;color:var(--ink)}
+    @media(max-width:850px){.hero{padding-top:48px}.hero-grid,.founding-layout,.trust-grid,.venue,.form-layout,.detail-grid,.live-feature{grid-template-columns:1fr}.ticket-hero{margin:15px 8px 20px;transform:rotate(1.5deg)}.categories{grid-template-columns:1fr 1fr}.listing-grid{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr}.step,.step+.step{padding:20px 0;border-left:0;border-top:1px solid color-mix(in srgb,var(--paper) 24%,transparent)}.step:first-child{border-top:0}.filter-panel{grid-template-columns:1fr 1fr}.field.search-field{grid-column:1/-1}.checkout-card{position:static}.venue{margin-left:16px;margin-right:16px}.detail-grid{gap:24px}}
+    @media(max-width:560px){.nav{padding:9px 12px;overflow:hidden}.nav button{padding:9px 8px;font-size:.82rem}.nav .sell-nav{margin-left:2px}.wrap{padding:0 17px}.hero{padding:38px 0 45px}.hero-grid{gap:27px}.hero h1{font-size:3.65rem}.searchbar,.founding-fields{grid-template-columns:1fr}.founding-layout{gap:28px}.founding-form{padding:20px}.ticket-hero{padding:24px;box-shadow:10px 12px 0 var(--ink)}section{padding:48px 0}.section-head{display:block}.section-head p{margin-top:12px}.categories{grid-template-columns:1fr 1fr;gap:10px}.cat{min-height:125px;padding:17px}.listing-grid{grid-template-columns:1fr}.listing-art{height:126px}.venue{padding:30px 23px;border-radius:16px}.filter-panel{grid-template-columns:1fr}.field.search-field{grid-column:auto}.form-grid{grid-template-columns:1fr}.form-grid .wide{grid-column:auto}.form-card{padding:20px}.info-line{grid-template-columns:90px 1fr}.footer-row{display:block}.footer-row>*{display:block;margin-top:8px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.listing{transition:none}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav" aria-label="Primary navigation">
+      <button data-go="home" class="active">Home</button>
+      <button data-go="browse">Browse</button>
+      <button data-scroll="venues">For venues</button>
+      <button data-go="sell" class="sell-nav">Sell tickets</button>
+    </nav>
+  </header>
+  <main>
+    <div id="home" class="page active">
+      <section class="hero">
+        <div class="wrap hero-grid">
+          <div>
+            <p class="micro">PLANS CHANGED? PASS IT ON.</p>
+            <h1>Plans changed? <em>Sell your tickets.</em></h1>
+            <p class="lead">A friend-to-fan exchange for the game, gig, play or festival you can no longer make.</p>
+            <div class="searchbar">
+              <input id="heroSearch" type="search" aria-label="Search events" placeholder="Search event, venue or location" />
+              <button class="primary" id="heroSearchBtn">Find tickets</button>
+            </div>
+          </div>
+          <div class="ticket-hero" aria-label="Illustrated sample ticket">
+            <span class="stamp">SECOND CHANCE</span><span class="date">SAT · 7:30 PM</span>
+            <h2>One great night.<br>New pair of plans.</h2>
+            <div class="dash"></div><div class="seat"><span>2 TICKETS</span><span>PASS IT ON →</span></div>
+          </div>
+        </div>
+      </section>
+      <section class="founding">
+        <div class="wrap founding-layout">
+          <div>
+            <p class="micro" style="color:var(--yellow)">FOUNDING MEMBERS</p>
+            <h2>We’re just getting started — be one of our first.</h2>
+            <p class="founding-copy">Our first users get white-glove treatment: the founder personally helps complete your first sale, from listing to ticket handoff.</p>
+            <span class="founding-offer">Face value or less, never above. The only extra cost is a 14% buyer fee — and your first transaction is free.</span>
+          </div>
+          <form id="foundingForm" class="founding-form" name="founding-list" method="POST" data-netlify="true" netlify-honeypot="_honey">
+            <input type="hidden" name="form-name" value="founding-list" />
+            <label class="hp" aria-hidden="true">Leave this field empty<input type="text" name="_honey" tabindex="-1" autocomplete="off" /></label>
+            <h3>Join the founding list — first sale free.</h3>
+            <p>Be first to hear when real listings open, and get personal help when it’s your turn to sell.</p>
+            <div class="founding-fields"><label class="hp" for="foundingEmail">Email</label><input id="foundingEmail" name="email" type="email" autocomplete="email" required aria-label="Email address" placeholder="you@example.com" /><button class="primary" type="submit">Join the list</button></div>
+            <p id="foundingStatus" class="inline-status" role="status" aria-live="polite" hidden></p>
+          </form>
+        </div>
+      </section>
+      <section>
+        <div class="wrap">
+          <div class="section-head"><h2>Every kind of night out.</h2><p>Not just game time. Find last-minute seats across the full calendar.</p></div>
+          <div class="categories">
+            <button class="cat" data-category="Sports"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6c4 1.1 8.8 5.9 12.8 12.8M18.4 5.6c-4 1.1-8.8 5.9-12.8 12.8"/></svg><div><strong>Sports</strong><br><span>From puck drop to first pitch</span></div></button>
+            <button class="cat" data-category="Concerts"><svg viewBox="0 0 24 24"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg><div><strong>Concerts</strong><br><span>Big rooms and local stages</span></div></button>
+            <button class="cat" data-category="Theater & Arts"><svg viewBox="0 0 24 24"><path d="M4 4h16v12H4zM8 20h8M12 16v4"/><path d="M8 9c1-2 2-2 4 0s3 2 4 0"/></svg><div><strong>Theater & Arts</strong><br><span>Plays, comedy, opera and more</span></div></button>
+            <button class="cat" data-category="Festivals"><svg viewBox="0 0 24 24"><path d="M4 19l4-10 4 10 4-14 4 14M3 19h18"/><path d="M7 5l2 1-2 1M15 3l2 1-2 1"/></svg><div><strong>Festivals</strong><br><span>Day passes worth passing on</span></div></button>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="wrap">
+          <div class="section-head"><h2>Someone else can still go.</h2><button class="secondary" data-go="browse">Browse all listings</button></div>
+          <div id="liveFeature"></div>
+          <div class="notice"><strong>Preview marketplace:</strong> the listings below are fictional samples that show how the public marketplace could feel.</div>
+          <div id="featuredGrid" class="listing-grid"></div>
+        </div>
+      </section>
+      <section class="how">
+        <div class="wrap"><div class="section-head"><h2>Change the plan,<br>not the experience.</h2><p>Turn an unused ticket into someone else’s good night out!</p></div><div class="steps">
+          <div class="step"><span class="num">01</span><h3>List it</h3><p>Add the event, seats and your price. Face-value venue? We’ll make that clear.</p></div>
+          <div class="step"><span class="num">02</span><h3>Sell it</h3><p>A nearby fan finds your listing and checks out with a clear fee breakdown.</p></div>
+          <div class="step"><span class="num">03</span><h3>Get paid</h3><p>In the future marketplace, payment would release after a verified ticket transfer.</p></div>
+        </div></div>
+      </section>
+      <section><div class="wrap trust-grid"><h2 class="promise">Good plans.<br>Fair exchange.</h2><div class="trust-list">
+        <div class="trust-item"><strong>Face-value promise</strong><span>Special badges and price caps for participating no-upsell venues.</span></div>
+        <div class="trust-item"><strong>Protected payment model</strong><span>Designed for escrow-style payment released after transfer—not awkward stranger-to-stranger payment.</span></div>
+        <div class="trust-item"><strong>Venue-backed trust</strong><span>A path for small venues to offer an official fan exchange without building one.</span></div>
+      </div></div></section>
+      <section id="venues" class="venue wrap"><div><p class="micro" style="color:#5c4110">FOR INDEPENDENT VENUES</p><h2>Make “plans changed” your customer-service win.</h2><p>Give patrons a fair, familiar place to pass on tickets while protecting your no-upsell policy and your reputation.</p><button class="secondary" id="venueInterest">See partnership idea</button></div><div class="venue-card"><ul><li>Official fan-to-fan exchange positioning</li><li>Face-value price caps for your events</li><li>A simple handoff for your box office team</li><li>No resale platform to build or staff</li></ul></div></section>
+    </div>
+
+    <div id="browse" class="page">
+      <div class="wrap browse-head"><p class="micro">MARKETPLACE</p><h2>Find your next plan.</h2><p class="lead">Start with the clearly marked live listing, followed by fictional samples that demonstrate the marketplace experience.</p></div>
+      <div class="wrap">
+        <div class="filter-panel">
+          <div class="field search-field"><label for="filterSearch">Event, venue or location</label><input id="filterSearch" type="search" placeholder="Try ‘opera house’" /></div>
+          <div class="field"><label for="filterCategory">Category</label><select id="filterCategory"><option>All categories</option><option>Sports</option><option>Concerts</option><option>Theater & Arts</option><option>Festivals</option></select></div>
+          <div class="field"><label for="filterLocation">Location</label><select id="filterLocation"><option>All locations</option></select></div>
+          <div class="field"><label for="filterDate">Date</label><select id="filterDate"><option value="all">Any date</option><option value="today">Today</option><option value="weekend">This weekend</option><option value="later">Next week</option></select></div>
+          <div class="field toggle-wrap"><button id="faceToggle" class="toggle-btn" aria-pressed="false">Face-value only</button></div>
+          <div class="field"><label for="maxPrice">Max price per ticket</label><select id="maxPrice"><option value="999">Any price</option><option value="50">$50</option><option value="100">$100</option><option value="150">$150</option></select></div>
+        </div>
+        <div class="results-row"><strong id="resultCount">13 listings</strong><span class="micro">PRICES PER TICKET</span></div>
+        <div id="browseGrid" class="listing-grid"></div>
+      </div>
+      <section id="venuesBrowse" class="venue wrap"><div><p class="micro" style="color:#5c4110">FOR VENUES</p><h2>Your official fan exchange.</h2><p>Help patrons find a new fan when life intervenes—without compromising your no-upsell policy.</p></div><div class="venue-card"><strong>Built for the long tail</strong><p>Historic theaters, community arts centers, local music rooms and festivals deserve resale tools too.</p><button class="secondary" data-go="home" data-home-scroll="venues">Explore the model</button></div></section>
+    </div>
+
+    <div id="sell" class="page form-page">
+      <div class="wrap"><p class="micro">SELL A TICKET</p><h2>Pass your plan on.</h2><p class="lead">Tell us what changed. A real human—the founder—will personally reach out and help facilitate your sale.</p><div class="form-layout">
+        <form id="sellForm" class="form-card" name="ticket-sale" method="POST" data-netlify="true" netlify-honeypot="_honey"><div class="form-grid">
+          <input type="hidden" name="form-name" value="ticket-sale" />
+          <label class="hp" aria-hidden="true">Leave this field empty<input type="text" name="_honey" tabindex="-1" autocomplete="off" /></label>
+          <div class="wide"><label for="eventName">Event name</label><input id="eventName" name="event_name" required placeholder="What were you going to see?" /></div>
+          <div><label for="sellCategory">Category</label><select id="sellCategory" name="category" required><option value="">Choose one</option><option>Sports</option><option>Concerts</option><option>Theater & Arts</option><option>Festivals</option></select></div>
+          <div><label for="sellVenue">Venue</label><input id="sellVenue" name="venue" required placeholder="Venue name" /></div>
+          <div><label for="sellLocation">City</label><input id="sellLocation" name="city" required placeholder="City, ST" /></div>
+          <div><label for="sellDate">Date & time</label><input id="sellDate" name="event_date_time" type="datetime-local" required /></div>
+          <div><label for="sellQty">Number of tickets</label><select id="sellQty" name="ticket_count"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+          <div><label for="sellPrice">Price per ticket</label><input id="sellPrice" name="price_per_ticket" type="number" min="1" required placeholder="$" /></div>
+          <div><label for="sellerEmail">Your email</label><input id="sellerEmail" name="seller_email" type="email" autocomplete="email" required placeholder="you@example.com" /></div>
+          <div><label for="sellerPhone">Your phone</label><input id="sellerPhone" name="seller_phone" type="tel" autocomplete="tel" required placeholder="Best number to reach you" /></div>
+          <div class="wide"><label for="sellSeats">Seats / ticket details</label><input id="sellSeats" name="seat_details" required placeholder="Section, row, seat or general admission" /></div>
+          <div class="wide"><label for="sellNotes">Anything buyers should know?</label><textarea id="sellNotes" name="notes" placeholder="Transfer method, accessibility, entry details…"></textarea></div>
+          <div class="wide"><label class="checkline"><input id="sellFace" name="face_value_only" type="checkbox" value="Yes" /> This event follows a face-value-only resale policy</label></div>
+          <div class="wide"><button class="primary full" type="submit">Ask the founder to help sell these</button></div>
+          <p id="sellStatus" class="inline-status wide" role="status" aria-live="polite" hidden></p>
+        </div></form>
+        <aside class="form-note"><h3>Your first sale gets the founder treatment.</h3><p>Submit the details and the founder will personally reach out to help with the listing, buyer match and ticket handoff.</p><h3>Founding-member benefit</h3><p><strong>Your first transaction is free.</strong> The usual 14% service fee is waived while we help our earliest users get started.</p><h3>Still an early marketplace</h3><p>Browsing remains a public concept preview. Tickets are not automatically published and no payment is taken on this page.</p></aside>
+      </div></div>
+    </div>
+
+    <div id="detail" class="page detail"><div class="wrap"><button class="back" id="backBrowse">← Back to listings</button><div id="detailContent"></div></div></div>
+  </main>
+
+  <dialog id="demoDialog"><div class="modal" id="modalContent"></div></dialog>
+  <footer><div class="wrap footer-row"><span>Plans changed? Pass it on.</span><span>Live listings are clearly marked · Sample listings are fictional</span><a href="#venues" data-go="home" data-home-scroll="venues">For venues</a></div></footer>
+<script>
+(function(){
+  var listings=[
+    {id:1,title:'Harbor Folk: The Pine & River Duo',category:'Theater & Arts',venue:'Harbor Light Opera House',location:'Clayton, NY',date:'Today · 7:30 PM',dateGroup:'today',price:42,qty:2,seats:'Orchestra, Row F · Seats 8–9',face:true,seller:'Mara K.',rating:'5.0 · 8 exchanges',note:'A warm acoustic set inside a restored waterfront opera house.'},
+    {id:2,title:'Seaside Hockey Club vs. Harbor Wolves',category:'Sports',venue:'North Shore Ice Center',location:'Boston, MA',date:'Today · 7:00 PM',dateGroup:'today',price:68,qty:2,seats:'Section 118 · Row 12',face:false,seller:'Jamie R.',rating:'4.9 · 14 exchanges',note:'Great view of the attacking end for two periods.'},
+    {id:3,title:'Maya Reed & The Night Lines',category:'Concerts',venue:'The Lantern Room',location:'San Diego, CA',date:'Tomorrow · 8:00 PM',dateGroup:'weekend',price:54,qty:2,seats:'General admission',face:true,seller:'Theo P.',rating:'New seller',note:'Indie soul in a small room. Mobile transfer.'},
+    {id:4,title:'Twelfth Night',category:'Theater & Arts',venue:'Civic Repertory Stage',location:'Chicago, IL',date:'Sat · 7:30 PM',dateGroup:'weekend',price:75,qty:2,seats:'Mezzanine · Row C',face:true,seller:'Nina S.',rating:'4.8 · 6 exchanges',note:'A lively new staging with an original score.'},
+    {id:5,title:'Sunset Food & Sound Festival',category:'Festivals',venue:'Waterfront Commons',location:'Austin, TX',date:'Sat · 12:00 PM',dateGroup:'weekend',price:95,qty:2,seats:'Saturday day passes',face:false,seller:'Eli M.',rating:'5.0 · 3 exchanges',note:'Single-day entry with all music stages included.'},
+    {id:6,title:'City FC vs. Union Athletic',category:'Sports',venue:'Crescent Stadium',location:'Portland, OR',date:'Sun · 4:30 PM',dateGroup:'weekend',price:61,qty:4,seats:'Section 208 · Row G',face:false,seller:'Cal D.',rating:'4.9 · 11 exchanges',note:'Four seats together near midfield.'},
+    {id:7,title:'The Satellites — Late Show',category:'Concerts',venue:'Atlas Hall',location:'Denver, CO',date:'Sun · 9:00 PM',dateGroup:'weekend',price:88,qty:2,seats:'Floor · GA',face:false,seller:'Kira A.',rating:'4.7 · 5 exchanges',note:'Doors at 8. Digital tickets ready to transfer.'},
+    {id:8,title:'Laugh Lines Comedy Showcase',category:'Theater & Arts',venue:'Juniper Arts House',location:'Santa Fe, NM',date:'Tue · 8:00 PM',dateGroup:'later',price:36,qty:2,seats:'Table 14 · Seats 1–2',face:true,seller:'Rosa V.',rating:'5.0 · 4 exchanges',note:'Six comics, one intimate room.'},
+    {id:9,title:'Autumn Makers Festival',category:'Festivals',venue:'Old Mill Yard',location:'Burlington, VT',date:'Next Fri · 3:00 PM',dateGroup:'later',price:28,qty:3,seats:'Friday entry',face:true,seller:'Sam L.',rating:'4.9 · 9 exchanges',note:'Craft, food and live music; rain or shine.'},
+    {id:10,title:'Women’s Pro Basketball: Waves vs. Comets',category:'Sports',venue:'Bayfront Arena',location:'San Francisco, CA',date:'Next Fri · 7:30 PM',dateGroup:'later',price:112,qty:2,seats:'Lower bowl · Row H',face:false,seller:'Alex B.',rating:'5.0 · 17 exchanges',note:'Center-court sightline, aisle seats.'},
+    {id:11,title:'Brass on the Green',category:'Concerts',venue:'Riverside Pavilion',location:'New Orleans, LA',date:'Next Sat · 6:00 PM',dateGroup:'later',price:47,qty:2,seats:'Lawn · GA',face:true,seller:'Drew C.',rating:'4.8 · 12 exchanges',note:'Outdoor brass showcase; gates open at 5.'},
+    {id:12,title:'Mountain Light Weekend',category:'Festivals',venue:'Summit Meadow',location:'Boise, ID',date:'Next Sat · 10:00 AM',dateGroup:'later',price:145,qty:2,seats:'Two-day passes',face:false,seller:'Avery T.',rating:'New seller',note:'Music, outdoor film and food for the full weekend.'}
+  ];
+  var activeListing=null,faceOnly=false,returnPage='browse',serviceFeeRate=.14;
+  function slugCat(c){return c==='Sports'?'sports':c==='Concerts'?'concerts':c==='Festivals'?'festivals':'theater'}
+  function listingCard(x){return '<article class="listing'+(x.real?' live-card':'')+'" role="button" tabindex="0" data-id="'+x.id+'" aria-label="View '+x.title+'"><div class="listing-art '+slugCat(x.category)+'">'+(x.real?'<span class="live-badge">LIVE LISTING</span>':'')+'<span class="category-label">'+x.category+'</span></div><div class="listing-body">'+(x.real?'<p class="micro" style="color:var(--red-dark);margin:0 0 8px">REAL TICKETS AVAILABLE NOW</p>':x.face?'<span class="badge">Face value</span>':'')+'<h3>'+x.title+'</h3><p class="meta">'+x.date+'</p><p class="meta">'+x.venue+' · '+x.location+'</p><div class="listing-foot"><span class="meta">'+x.qty+' ticket'+(x.qty>1?'s':'')+'</span><span class="price"><strong>$'+x.price+'</strong><small>each'+(x.real&&x.facePrice?' · $'+x.facePrice+' face':'')+'</small></span></div></div></article>'}
+  function bindCards(root){root.querySelectorAll('.listing').forEach(function(el){var open=function(){showDetail(Number(el.dataset.id))};el.addEventListener('click',open);el.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}})})}
+  function liveFeatureCard(x){return '<article class="live-feature"><div class="live-art"><span class="live-badge">LIVE LISTING</span><p class="micro" style="color:white;margin-top:16px">REAL TICKETS AVAILABLE NOW</p><h3>'+x.title+'</h3><p>'+x.date+' · '+x.venue+', '+x.location+'</p></div><div class="live-body"><div class="live-details"><strong>'+x.qty+' tickets · '+x.seats+'</strong><span>'+x.note+'</span>'+(x.parking?'<span>'+x.parking+'</span>':'')+'</div><div><p class="live-price"><strong>$'+x.price+'</strong> each'+(x.facePrice?' <s>$'+x.facePrice+' face value</s>':'')+'</p><a class="primary live-contact full" href="mailto:seugeneb@comcast.net?subject='+encodeURIComponent(x.title+' tickets')+'">Contact the founder about these tickets</a></div></div></article>'}
+  function renderLiveFeature(){var feats=listings.filter(function(item){return item.real}),el=document.getElementById('liveFeature');el.innerHTML=feats.map(liveFeatureCard).join('')}
+  function renderFeatured(){var el=document.getElementById('featuredGrid'),samples=listings.filter(function(x){return !x.real}).slice(0,6);el.innerHTML=samples.map(listingCard).join('');bindCards(el)}
+  function renderBrowse(){var q=document.getElementById('filterSearch').value.toLowerCase(),cat=document.getElementById('filterCategory').value,loc=document.getElementById('filterLocation').value,dg=document.getElementById('filterDate').value,max=Number(document.getElementById('maxPrice').value);var results=listings.filter(function(x){return(!q||(x.title+' '+x.venue+' '+x.location).toLowerCase().includes(q))&&(cat==='All categories'||x.category===cat)&&(loc==='All locations'||x.location===loc)&&(dg==='all'||x.dateGroup===dg)&&x.price<=max&&(!faceOnly||x.face)});var grid=document.getElementById('browseGrid');grid.innerHTML=results.length?results.map(listingCard).join(''):'<div class="empty"><strong>No sample listings match those filters.</strong><br>Try widening your search.</div>';document.getElementById('resultCount').textContent=results.length+' listing'+(results.length===1?'':'s');bindCards(grid)}
+  function go(id){document.querySelectorAll('.page').forEach(function(p){p.classList.toggle('active',p.id===id)});document.querySelectorAll('.nav button[data-go]').forEach(function(b){b.classList.toggle('active',b.dataset.go===id)});window.scrollTo(0,0);if(id==='browse')renderBrowse()}
+  document.querySelectorAll('[data-go]').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();go(b.dataset.go);if(b.dataset.homeScroll)setTimeout(function(){document.getElementById(b.dataset.homeScroll).scrollIntoView({behavior:'smooth'})},20)})});
+  document.querySelectorAll('[data-scroll]').forEach(function(b){b.addEventListener('click',function(){go('home');setTimeout(function(){document.getElementById(b.dataset.scroll).scrollIntoView({behavior:'smooth'})},20)})});
+  document.querySelectorAll('[data-category]').forEach(function(b){b.addEventListener('click',function(){document.getElementById('filterCategory').value=b.dataset.category;go('browse')})});
+  function searchFromHero(){document.getElementById('filterSearch').value=document.getElementById('heroSearch').value;go('browse')}
+  document.getElementById('heroSearchBtn').addEventListener('click',searchFromHero);document.getElementById('heroSearch').addEventListener('keydown',function(e){if(e.key==='Enter')searchFromHero()});
+  ['filterSearch','filterCategory','filterLocation','filterDate','maxPrice'].forEach(function(id){document.getElementById(id).addEventListener(id==='filterSearch'?'input':'change',renderBrowse)});document.getElementById('faceToggle').addEventListener('click',function(){faceOnly=!faceOnly;this.classList.toggle('on',faceOnly);this.setAttribute('aria-pressed',faceOnly);renderBrowse()});
+  function showDetail(id){activeListing=listings.find(function(x){return x.id===id});if(!activeListing)return;var x=activeListing,fee=(x.price*serviceFeeRate).toFixed(2),total=(x.price*(1+serviceFeeRate)*x.qty).toFixed(2),checkout=x.real?'<aside><div class="checkout-card"><span class="live-badge">LIVE LISTING</span><h3 style="margin-top:16px">Real tickets available now</h3><div class="qty-row"><span>$'+x.price+' × '+x.qty+' tickets</span><strong>$'+(x.price*x.qty).toFixed(2)+'</strong></div>'+(x.facePrice?'<div class="fee-row"><span>Face value</span><span><s>$'+x.facePrice+' each</s></span></div>':'')+(x.parking?'<div class="fee-row"><span>Parking</span><span>'+x.parking+'</span></div>':'')+'<a class="primary live-contact full" href="mailto:seugeneb@comcast.net?subject='+encodeURIComponent(x.title+' tickets')+'">Contact the founder about these tickets</a><p class="demo-flag">The founder will confirm availability and arrange the ticket transfer.</p></div></aside>':'<aside><div class="checkout-card"><h3>'+x.qty+' tickets</h3><div class="qty-row"><span>$'+x.price+' × '+x.qty+'</span><strong>$'+(x.price*x.qty).toFixed(2)+'</strong></div><div class="fee-row"><span>14% service fee <small>(site-owner configurable · includes secure payment processing)</small></span><span>$'+(fee*x.qty).toFixed(2)+'</span></div><div class="total-row"><span>Demo total</span><span>$'+total+'</span></div><button class="primary full" id="checkoutBtn">Continue to demo checkout</button><p class="demo-flag">Preview only · no payment will be taken</p><div class="seller"><span class="micro">SELLER</span><strong>'+x.seller+'</strong><span class="meta">'+x.rating+'</span></div></div></aside>';document.getElementById('detailContent').innerHTML='<div class="detail-grid"><div class="detail-main"><div class="detail-art listing-art '+slugCat(x.category)+'">'+(x.real?'<span class="live-badge">LIVE LISTING</span>':'')+'<span class="category-label">'+x.category+'</span></div>'+(x.real?'<p class="micro" style="color:var(--red-dark)">REAL TICKETS AVAILABLE NOW</p>':x.face?'<p><span class="badge">Face-value listing</span></p>':'')+'<h2>'+x.title+'</h2><p class="lead">'+x.note+'</p><div class="info-lines"><div class="info-line"><span>When</span><strong>'+x.date+'</strong></div><div class="info-line"><span>Where</span><strong>'+x.venue+' · '+x.location+'</strong></div><div class="info-line"><span>Tickets</span><strong>'+x.qty+' · '+x.seats+'</strong></div>'+(x.real&&x.parking?'<div class="info-line"><span>Parking</span><strong>'+x.parking+'</strong></div>':'')+'</div></div>'+checkout+'</div>';returnPage=document.getElementById('browse').classList.contains('active')?'browse':'home';go('detail');if(!x.real)document.getElementById('checkoutBtn').addEventListener('click',openCheckout)}
+  document.getElementById('backBrowse').addEventListener('click',function(){go(returnPage)});
+  var dialog=document.getElementById('demoDialog'),modal=document.getElementById('modalContent');
+  function openCheckout(){var x=activeListing,total=(x.price*(1+serviceFeeRate)*x.qty).toFixed(2);modal.innerHTML='<button class="close-x" aria-label="Close">×</button><p class="micro">DEMO CHECKOUT</p><h2>Review your order</h2><p><strong>'+x.title+'</strong><br><span class="meta">'+x.date+' · '+x.venue+'</span></p><div class="qty-row"><span>Tickets</span><span>$'+(x.price*x.qty).toFixed(2)+'</span></div><div class="fee-row"><span>14% service fee <small>(site-owner configurable · includes secure payment processing)</small></span><span>$'+(x.price*serviceFeeRate*x.qty).toFixed(2)+'</span></div><div class="total-row"><span>Total</span><span>$'+total+'</span></div><div class="notice"><strong>Demo only:</strong> no ticket will transfer and no money will move.</div><button class="primary full" id="confirmDemo">Complete demo checkout</button>';dialog.showModal();modal.querySelector('.close-x').onclick=function(){dialog.close()};document.getElementById('confirmDemo').onclick=showConfirmation}
+  function showConfirmation(){modal.innerHTML='<div class="confirmation"><div class="mark">✓</div><p class="micro">DEMO COMPLETE</p><h2>That’s how a second chance would begin.</h2><p>No order was placed, no ticket was transferred and no payment was made.</p><button class="primary full" id="doneDemo">Back to listings</button></div>';document.getElementById('doneDemo').onclick=function(){dialog.close();go('browse')}}
+  dialog.addEventListener('click',function(e){if(e.target===dialog)dialog.close()});
+  function submitRelay(form,status,successMessage){
+    form.addEventListener('submit',function(e){
+      e.preventDefault();
+      var button=form.querySelector('button[type="submit"]'),original=button.textContent;
+      button.disabled=true;button.textContent='Sending…';status.hidden=false;status.textContent='Sending your details…';
+      fetch(form.action,{method:'POST',body:new URLSearchParams(new FormData(form)),headers:{'Content-Type':'application/x-www-form-urlencoded','Accept':'application/json'}}).then(function(response){if(!response.ok)throw new Error('Relay request failed');form.reset();status.textContent=successMessage}).catch(function(){status.innerHTML='We couldn’t send this automatically. <a class="relay-fallback" href="mailto:seugeneb@comcast.net">Email the founder directly</a> and we’ll take it from there.'}).finally(function(){button.disabled=false;button.textContent=original});
+    });
+  }
+  submitRelay(document.getElementById('foundingForm'),document.getElementById('foundingStatus'),'You’re on the founding list. We’ll be in touch as the first real listings open.');
+  submitRelay(document.getElementById('sellForm'),document.getElementById('sellStatus'),'Thanks — we’ll personally be in touch shortly to help with your sale.');
+  document.getElementById('venueInterest').addEventListener('click',function(){modal.innerHTML='<button class="close-x" aria-label="Close">×</button><p class="micro">VENUE PARTNERSHIP CONCEPT</p><h2>Start with a fair exchange.</h2><p>A participating venue could direct patrons here when plans change, set face-value resale rules, and let verified fans handle the exchange.</p><p class="notice">This preview does not collect inquiries yet. The next public version can add a real venue contact path.</p><button class="secondary full" id="closeVenue">Got it</button>';dialog.showModal();modal.querySelector('.close-x').onclick=function(){dialog.close()};document.getElementById('closeVenue').onclick=function(){dialog.close()}});
+  var locations=Array.from(new Set(listings.map(function(x){return x.location}))).sort();document.getElementById('filterLocation').innerHTML='<option>All locations</option>'+locations.map(function(x){return '<option>'+x+'</option>'}).join('');renderLiveFeature();renderFeatured();renderBrowse();
+})();
+</script>
+</body>
+</html>
