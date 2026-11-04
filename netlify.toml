@@ -1,0 +1,72 @@
+# Changed Plans working site — Netlify wiring (ACTIVE, deployed Phase 2).
+# Marketing pages stay untouched at the root; the app lives under /app/.
+
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+# API routing — clean URLs -> function files (status 200 = rewrite).
+[[redirects]]
+  from = "/api/auth/request-link"
+  to = "/.netlify/functions/auth-request-link"
+  status = 200
+[[redirects]]
+  from = "/api/auth/verify"
+  to = "/.netlify/functions/auth-verify"
+  status = 200
+[[redirects]]
+  from = "/api/auth/me"
+  to = "/.netlify/functions/auth-me"
+  status = 200
+
+# Netlify redirects cannot branch on HTTP method, so /api/listings is ONE
+# function (listings.js) that dispatches on event.httpMethod to the
+# listings-create / listings-list handlers.
+[[redirects]]
+  from = "/api/listings"
+  to = "/.netlify/functions/listings"
+  status = 200
+
+[[redirects]]
+  from = "/api/checkout"
+  to = "/.netlify/functions/checkout-create"
+  status = 200
+[[redirects]]
+  from = "/api/stripe-webhook"
+  to = "/.netlify/functions/stripe-webhook"
+  status = 200
+[[redirects]]
+  from = "/api/orders/:id"
+  to = "/.netlify/functions/orders-get"
+  status = 200
+[[redirects]]
+  from = "/api/disputes"
+  to = "/.netlify/functions/disputes-create"
+  status = 200
+[[redirects]]
+  from = "/api/admin/queue"
+  to = "/.netlify/functions/admin-queue"
+  status = 200
+[[redirects]]
+  from = "/api/admin/verify-transfer"
+  to = "/.netlify/functions/admin-verify-transfer"
+  status = 200
+[[redirects]]
+  from = "/api/admin/mark-paid-out"
+  to = "/.netlify/functions/admin-mark-paid-out"
+  status = 200
+[[redirects]]
+  from = "/api/admin/sweep"
+  to = "/.netlify/functions/admin-sweep"
+  status = 200
+[[redirects]]
+  from = "/api/admin/run-pricing"
+  to = "/.netlify/functions/admin-price-run"
+  status = 200
+
+# SCHEDULED FUNCTIONS — no redirects (Netlify invokes them on cron):
+#   scheduled-sweep.js    every 5 min   (exports.config.schedule)
+#   scheduled-pricing.js  every 15 min  (exports.config.schedule)
