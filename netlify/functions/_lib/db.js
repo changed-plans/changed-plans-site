@@ -70,7 +70,7 @@ async function rawQuery(sql, params = []) {
   }
   // Neon returns rows as arrays + a fields list; normalize to objects.
   const fields = (data.fields || []).map((f) => f.name);
-  const rows = (data.rows || []).map((r) => Object.fromEntries(r.map((v, i) => [fields[i], v])));
+  const rows = (data.rows || []).map((r) => (Array.isArray(r) ? Object.fromEntries(r.map((v, i) => [fields[i], v])) : r));
   return { rows, rowCount: data.rowCount != null ? data.rowCount : rows.length };
 }
 
