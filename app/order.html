@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Order status — Changed Plans</title>
+<link rel="stylesheet" href="/app/assets/app.css" />
+</head>
+<body>
+<header class="top"><nav class="nav">
+  <a class="brand" href="/app/index.html">Changed <em>Plans</em></a>
+  <a href="/app/index.html">Buy</a>
+  <a href="/app/sell.html">Sell tickets</a>
+  <a href="/app/order.html" class="active">My order</a>
+  <a href="/app/dispute.html">Help / dispute</a>
+  <a href="/app/admin.html">Desk</a>
+  <form class="signin" id="signin-form">
+    <input id="signin-email" type="email" placeholder="Email for sign-in link" required />
+    <button class="primary" type="submit">Sign in</button>
+  </form>
+  <span id="signin-out" class="micro"></span>
+</nav></header>
+
+<main class="wrap">
+  <h1>Order status</h1>
+  <p class="lead">Sign in with the email you bought with, then enter your order ID.</p>
+  <form class="app card" id="order-form">
+    <div><label for="oid">Order ID</label><input id="oid" required placeholder="ord_…" value="" /></div>
+    <button class="primary" type="submit">Look up</button>
+  </form>
+  <div id="order-out" style="margin-top:18px"></div>
+</main>
+
+<script src="/app/assets/app.js"></script>
+<script>
+if (qs('id')) el('oid').value = qs('id');
+async function lookup(id) {
+  const out = el('order-out');
+  out.innerHTML = '<p class="meta">Loading…</p>';
+  try {
+    const { order, listing, transfer } = await api('/api/orders/' + encodeURIComponent(id));
+    out.innerHTML = `
+      <section class="card">
+        <p class="micro">ORDER <code>${order.id}</code></p>
+        <h3 style="margin:4px 0">${listing.event_name}</h3>
+        <p class="meta">${new Date(listing.event_date).toLocaleString()} · ${listing.venue} · ${listing.seats}</p>
+        <div class="notice"><strong>Status: ${order.status.replace(/_/g, ' ')}</strong><br/>${order.status_explainer}</div>
+        <div class="qty-row"><span>${order.qty} ticket(s)</span><span>${order.price_total}</span></div>
+        <div class="fee-row"><span>Face value total</span><span>${order.face_total}</span></div>
+        <div class="fee-row"><span>Buyer fee</span><span>${order.fee_waived ? 'waived (first transaction)' : order.buyer_fee}</span></div>
+        <div class="total-row"><span>Total paid</span><span>${order.total_paid}</span></div>
+        ${transfer ? `<p class="meta">Ticket transfer to you: ${transfer.status}</p>` : ''}
+        <p style="margin-top:14px"><a class="btn secondary" href="/app/dispute.html?order=${order.id}">Something wrong? Open a dispute</a></p>
+      </section>`;
+  } catch (err) { showError(out, err); }
+}
+el('order-form').addEventListener('submit', (e) => { e.preventDefault(); lookup(el('oid').value.trim()); });
+if (qs('id')) lookup(qs('id'));
+</script>
+</body>
+</html>
