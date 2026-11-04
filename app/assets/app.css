@@ -21,6 +21,7 @@ header.top{position:sticky;top:0;background:color-mix(in srgb,var(--paper) 92%,t
 .nav .brand em{font-style:normal;color:var(--red)}
 h1{font-size:clamp(2rem,5vw,3.2rem);letter-spacing:-.04em;line-height:1;margin:34px 0 10px}
 .lead{color:var(--muted);max-width:620px}
+.pitchline{font-size:clamp(1.3rem,3vw,1.75rem);font-weight:700;line-height:1.2;letter-spacing:-.02em;max-width:700px;margin:20px 0 4px}
 .micro{font-family:"IBM Plex Mono",monospace;font-size:.75rem;letter-spacing:.02em;color:var(--muted)}
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px;margin-top:22px}
