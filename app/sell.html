@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sell your tickets — Changed Plans</title>
+<link rel="stylesheet" href="/app/assets/app.css" />
+</head>
+<body>
+<header class="top"><nav class="nav">
+  <a class="brand" href="/app/index.html">Changed <em>Plans</em></a>
+  <a href="/app/index.html">Buy</a>
+  <a href="/app/sell.html" class="active">Sell tickets</a>
+  <a href="/app/order.html">My order</a>
+  <a href="/app/dispute.html">Help / dispute</a>
+  <a href="/app/admin.html">Desk</a>
+  <form class="signin" id="signin-form">
+    <input id="signin-email" type="email" placeholder="Email for sign-in link" required />
+    <button class="primary" type="submit">Sign in</button>
+  </form>
+  <span id="signin-out" class="micro"></span>
+</nav></header>
+
+<main class="wrap">
+  <h1>Plans changed? Pass it on.</h1>
+  <p class="lead">List at face value or less — never above. You receive 100% of your price when your ticket sells; the buyer pays the only fee. First, sign in (top right) so the listing is yours.</p>
+  <div class="fee-line">Face value or less, never above. The only extra cost is a 14% buyer fee — and your first transaction is free.</div>
+
+  <form class="app card" id="sell-form">
+    <div class="two">
+      <div><label for="f-event">Event</label><input id="f-event" required placeholder="Kansas State at Colorado" /></div>
+      <div><label for="f-date">Date &amp; time</label><input id="f-date" type="datetime-local" required /></div>
+    </div>
+    <div class="two">
+      <div><label for="f-venue">Venue</label><input id="f-venue" required placeholder="Folsom Field" /></div>
+      <div><label for="f-location">City</label><input id="f-location" required placeholder="Boulder, CO" /></div>
+    </div>
+    <div class="two">
+      <div><label for="f-seats">Seats</label><input id="f-seats" required placeholder="Section 571 · Row 2 · Seats 3–4" /></div>
+      <div><label for="f-qty">How many tickets</label><input id="f-qty" type="number" min="1" max="20" value="2" required /></div>
+    </div>
+    <div class="two">
+      <div><label for="f-face">Face value per ticket ($)</label><input id="f-face" required placeholder="355.00" /></div>
+      <div><label for="f-price">Your price per ticket ($, face or less)</label><input id="f-price" required placeholder="355.00" /></div>
+    </div>
+    <div>
+      <label for="f-category">Category</label>
+      <select id="f-category"><option>Sports</option><option>Concerts</option><option>Theater</option><option>Festivals</option></select>
+    </div>
+    <div>
+      <label for="f-restrictions">Restrictions a buyer must know (required)</label>
+      <textarea id="f-restrictions" required placeholder="Transferability, entry requirements, obstructed view — anything the buyer should know before paying. Shown on the listing, never discovered at the door."></textarea>
+    </div>
+    <fieldset style="border:1px solid var(--line);border-radius:10px;padding:16px">
+      <legend style="font-weight:700;font-size:.9rem;padding:0 6px">If they haven't sold — your three numbers</legend>
+      <p class="meta" style="margin-top:0">Changed Plans nets you 100% of the price (other channels net less). Settle these now, and price drops run themselves — no day-of phone tag.</p>
+      <label style="display:flex;gap:8px;align-items:center;font-weight:600;font-size:.92rem">
+        <input type="checkbox" id="f-drops" style="width:auto" /> Let my price drop in stages as the event gets closer (10% at 2 days out, 20% at 1 day out, then my floor)
+      </label>
+      <div class="two" style="margin-top:12px">
+        <div><label for="f-pocket">1 · Your pocket floor, per ticket ($)</label><input id="f-pocket" placeholder="The least you need to actually pocket" /></div>
+        <div><label for="f-endgame">2 · Your game-morning floor, per ticket ($)</label><input id="f-endgame" placeholder="Your real number on event morning" /></div>
+      </div>
+      <label style="display:flex;gap:8px;align-items:center;font-weight:600;font-size:.92rem;margin-top:12px">
+        <input type="checkbox" id="f-endgame-auth" style="width:auto" /> 3 · Yes — on the morning of the event, drop to my game-morning floor without checking with me first
+      </label>
+    </fieldset>
+    <button class="primary" type="submit">Create listing</button>
+    <div id="sell-out"></div>
+  </form>
+
+  <div class="notice"><strong>How selling works:</strong> after you create the listing, you transfer the tickets to the Changed Plans account in the Ticketmaster app. We verify them in our account, and only then does your listing go live. When it sells, your payout is released after the buyer has the tickets — you're paid for real tickets, not promises.</div>
+</main>
+
+<script src="/app/assets/app.js"></script>
+<script>
+el('sell-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const out = el('sell-out');
+  out.textContent = 'Creating…';
+  try {
+    const data = await api('/api/listings', {
+      method: 'POST',
+      body: JSON.stringify({
+        event_name: el('f-event').value,
+        event_date: new Date(el('f-date').value).toISOString(),
+        venue: el('f-venue').value,
+        location: el('f-location').value,
+        category: el('f-category').value,
+        seats: el('f-seats').value,
+        qty: el('f-qty').value,
+        face_price: el('f-face').value,
+        price: el('f-price').value,
+        restrictions: el('f-restrictions').value,
+        allow_price_drops: el('f-drops').checked,
+        pocket_floor: el('f-pocket').value || undefined,
+        endgame_floor: el('f-endgame').value || undefined,
+        endgame_authorized: el('f-endgame-auth').checked,
+      }),
+    });
+    out.innerHTML = `<p class="ok">Listing created — not live yet.</p><p>${data.next_step}</p><p class="micro">Listing ID: <code>${data.listing_id}</code></p>`;
+  } catch (err) { showError(out, err); }
+});
+</script>
+</body>
+</html>
