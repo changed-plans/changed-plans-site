@@ -75,8 +75,12 @@
 
 <script src="/app/assets/app.js"></script>
 <script>
-el('sell-form').addEventListener('submit', async (e) => {
+const sellForm = el('sell-form');
+const createBtn = sellForm.querySelector('button[type="submit"]');
+sellForm.addEventListener('submit', async (e) => {
   e.preventDefault();
+  if (createBtn.disabled) return;
+  createBtn.disabled = true;
   const out = el('sell-out');
   out.textContent = 'Creating…';
   try {
@@ -100,7 +104,8 @@ el('sell-form').addEventListener('submit', async (e) => {
       }),
     });
     out.innerHTML = `<p class="ok">Listing created — not live yet.</p><p>${data.next_step}</p><p class="micro">Listing ID: <code>${data.listing_id}</code></p>`;
-  } catch (err) { showError(out, err); }
+    sellForm.addEventListener('input', () => { createBtn.disabled = false; }, { once: true });
+  } catch (err) { createBtn.disabled = false; showError(out, err); }
 });
 </script>
 <script data-goatcounter="https://myplanschanged.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
