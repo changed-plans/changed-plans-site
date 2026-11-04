@@ -70,3 +70,5 @@
 # SCHEDULED FUNCTIONS — no redirects (Netlify invokes them on cron):
 #   scheduled-sweep.js    every 5 min   (exports.config.schedule)
 #   scheduled-pricing.js  every 15 min  (exports.config.schedule)
+
+# redeploy 2026-11-04T00:33Z - pick up corrected DATABASE_URL
