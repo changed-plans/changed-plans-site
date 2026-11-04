@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Changed Plans — Tickets at face value</title>
+<link rel="stylesheet" href="/app/assets/app.css" />
+</head>
+<body>
+<header class="top"><nav class="nav">
+  <a class="brand" href="/app/index.html">Changed <em>Plans</em></a>
+  <a href="/app/index.html" class="active">Buy</a>
+  <a href="/app/sell.html">Sell tickets</a>
+  <a href="/app/order.html">My order</a>
+  <a href="/app/dispute.html">Help / dispute</a>
+  <a href="/app/admin.html">Desk</a>
+  <form class="signin" id="signin-form">
+    <input id="signin-email" type="email" placeholder="Email for sign-in link" required />
+    <button class="primary" type="submit">Sign in</button>
+  </form>
+  <span id="signin-out" class="micro"></span>
+</nav></header>
+
+<main class="wrap">
+  <h1>Last-minute tickets, at face value.</h1>
+  <p class="lead">Every ticket here has already been transferred to Changed Plans and verified in our account — no speculative listings, nobody selling a ticket they don't have. That's commitment #4 of the Changed Plans Code.</p>
+  <div class="fee-line">Face value or less, never above. The only extra cost is a 14% buyer fee — and your first transaction is free.</div>
+  <div id="listings" class="grid"><p class="meta">Loading tickets…</p></div>
+</main>
+
+<script src="/app/assets/app.js"></script>
+<script>
+(async () => {
+  const host = el('listings');
+  try {
+    const { listings } = await api('/api/listings');
+    if (!listings.length) {
+      host.innerHTML = '<p class="meta">No verified tickets right now. When a fan lists, the tickets appear here only after we hold and verify them.</p>';
+      return;
+    }
+    host.innerHTML = listings.map((l) => `
+      <article class="card listing">
+        <p class="micro">${l.category.toUpperCase()} · ${l.location}</p>
+        <h3>${l.event_name}</h3>
+        <p class="meta">${new Date(l.event_date).toLocaleString()} · ${l.venue}</p>
+        <p class="meta">${l.seats} · ${l.qty} ticket(s)</p>
+        <div class="restrictions"><strong>Good to know before you buy:</strong> ${l.restrictions}</div>
+        <div class="price-row">
+          <div class="price"><small>Face value ${l.face_value}</small><strong>${l.price}</strong><small>per ticket</small></div>
+          <a class="btn" href="/app/checkout.html?id=${l.id}">Buy</a>
+        </div>
+      </article>`).join('');
+  } catch (err) { showError(host, err); }
+})();
+</script>
+</body>
+</html>
