@@ -69,7 +69,7 @@ async function createMagicToken(userId) {
 
 /** Send the sign-in link via Resend (mailer stub-mode logs when keyless).
  *  Returns the link ONLY in local mode (dev/testing); null in production. */
-function deliverMagicLink(email, token) {
+async function deliverMagicLink(email, token) {
   const base = process.env.APP_BASE_URL || 'http://localhost:8888';
   // APP_BASE_URL points at the app root (…/app in production); the API
   // routes live at the SITE root, so build the verify link from the
@@ -77,15 +77,19 @@ function deliverMagicLink(email, token) {
   let origin = base;
   try { origin = new URL(base).origin; } catch { /* keep the raw base */ }
   const link = `${origin}/api/auth/verify?token=${token}`;
-  // Fire-and-forget: a mail hiccup must not break the sign-in request.
-  mailer.sendMail({
+  // Awaited: on serverless runtimes an un-awaited send can be frozen
+  // mid-flight when the handler returns, and the email is silently lost
+  // (bit us in production 2026-11-04: API said sent, nothing ever sent).
+  // sendMail never throws, so awaiting cannot break the sign-in request.
+  const mailResult = await mailer.sendMail({
     to: email,
     subject: 'Your Changed Plans sign-in link',
     text:
       `Sign in to Changed Plans:\n\n${link}\n\n` +
       'This link works once and expires in 15 minutes. ' +
       'If you didn\'t ask for it, you can ignore this email.',
-  }).catch((err) => console.error('[magic-link] mailer threw:', err));
+  }).catch((err) => ({ sent: false, error: String((err && err.message) || err) }));
+  console.log(`[magic-link] mail result for ${email}: ${JSON.stringify(mailResult)}`);
   if (mailer.isStub()) console.log(`[magic-link] for ${email}: ${link}`);
   return IS_LOCAL ? link : null;
 }
