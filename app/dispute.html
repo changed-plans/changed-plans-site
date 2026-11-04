@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dispute — Changed Plans</title>
+<link rel="stylesheet" href="/app/assets/app.css" />
+</head>
+<body>
+<header class="top"><nav class="nav">
+  <a class="brand" href="/app/index.html">Changed <em>Plans</em></a>
+  <a href="/app/index.html">Buy</a>
+  <a href="/app/sell.html">Sell tickets</a>
+  <a href="/app/order.html">My order</a>
+  <a href="/app/dispute.html" class="active">Help / dispute</a>
+  <a href="/app/admin.html">Desk</a>
+  <form class="signin" id="signin-form">
+    <input id="signin-email" type="email" placeholder="Email for sign-in link" required />
+    <button class="primary" type="submit">Sign in</button>
+  </form>
+  <span id="signin-out" class="micro"></span>
+</nav></header>
+
+<main class="wrap">
+  <h1>A real dispute process.</h1>
+  <p class="lead">Commitment #8 of the Changed Plans Code: every transaction has a named human on our side. Your dispute is answered within two business days, decided against the published Code — and if we got it wrong, the remedy is a refund, not an argument. If you were turned away because a ticket was invalid, that's a full refund (commitment #6).</p>
+
+  <form class="app card" id="dispute-form">
+    <div><label for="d-order">Order ID</label><input id="d-order" required placeholder="ord_…" /></div>
+    <div><label for="d-category">What happened?</label>
+      <select id="d-category">
+        <option value="invalid_ticket">I was turned away — the ticket was invalid</option>
+        <option value="not_received">I never received my tickets</option>
+        <option value="event_cancelled">The event was cancelled</option>
+        <option value="other">Something else</option>
+      </select>
+    </div>
+    <div><label for="d-desc">Tell us what happened</label><textarea id="d-desc" required placeholder="The more specific, the faster we can make it right."></textarea></div>
+    <button class="primary" type="submit">Open dispute</button>
+    <div id="dispute-out"></div>
+  </form>
+</main>
+
+<script src="/app/assets/app.js"></script>
+<script>
+if (qs('order')) el('d-order').value = qs('order');
+el('dispute-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const out = el('dispute-out');
+  out.textContent = 'Opening…';
+  try {
+    const data = await api('/api/disputes', {
+      method: 'POST',
+      body: JSON.stringify({
+        order_id: el('d-order').value.trim(),
+        category: el('d-category').value,
+        description: el('d-desc').value,
+      }),
+    });
+    out.innerHTML = `<p class="ok">Dispute opened (<code>${data.dispute_id}</code>).</p>
+      <p>Your named human: <strong>${data.assigned_human}</strong>. Answer by: <strong>${new Date(data.answer_by).toLocaleString()}</strong>.</p>
+      <p class="meta">${data.promise}</p>`;
+  } catch (err) { showError(out, err); }
+});
+</script>
+</body>
+</html>
