@@ -41,7 +41,7 @@ function neonSqlEndpoint(databaseUrl) {
   const u = new URL(databaseUrl);
   // The SQL-over-HTTP endpoint lives on the same host as the pooled
   // connection string (…-pooler.<region>.aws.neon.tech) at path /sql.
-  return `${u.protocol}//${u.host}/sql`;
+  return `https://${u.host}/sql`;
 }
 
 /** Rewrite sqlite `?` placeholders to Postgres $1..$n, in order. */
