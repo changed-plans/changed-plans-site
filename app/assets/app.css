@@ -1,0 +1,53 @@
+/* Changed Plans app — brand tokens carried over from the marketing site
+   (site-template.html) so the app feels like the same product. */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+:root{
+  color-scheme:light dark;
+  --paper:#fffaf2;--ink:#13233a;--muted:#596575;--line:#d9d4ca;--card:#ffffff;
+  --red:#e84f3d;--red-dark:#bd3425;--yellow:#f5c84b;--navy:#173a5e;--mint:#dff2e8;
+  --shadow:0 12px 32px rgba(35,37,43,.11);--radius:16px;
+}
+@media(prefers-color-scheme:dark){
+  :root{--paper:#111820;--ink:#f7f3ea;--muted:#b7c0ca;--line:#34404c;--card:#19232e;--red:#ff6b59;--yellow:#f5cb5c;--mint:#19392f}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"DM Sans",sans-serif;line-height:1.5}
+.wrap{max-width:960px;margin:auto;padding:0 22px 70px}
+header.top{position:sticky;top:0;background:color-mix(in srgb,var(--paper) 92%,transparent);border-bottom:1px solid var(--line);backdrop-filter:blur(10px);z-index:10}
+.nav{max-width:960px;margin:auto;padding:12px 22px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.nav a{color:var(--muted);text-decoration:none;font-weight:600;padding:9px 12px;border-radius:9px}
+.nav a:hover,.nav a.active{background:var(--card);color:var(--ink)}
+.nav .brand{font-weight:700;color:var(--ink);margin-right:auto}
+.nav .brand em{font-style:normal;color:var(--red)}
+h1{font-size:clamp(2rem,5vw,3.2rem);letter-spacing:-.04em;line-height:1;margin:34px 0 10px}
+.lead{color:var(--muted);max-width:620px}
+.micro{font-family:"IBM Plex Mono",monospace;font-size:.75rem;letter-spacing:.02em;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px;margin-top:22px}
+.listing h3{margin:0 0 6px;font-size:1.15rem}
+.meta{color:var(--muted);font-size:.88rem;margin:3px 0}
+.restrictions{font-size:.85rem;border-top:1px dashed var(--line);margin-top:12px;padding-top:10px}
+.price-row{display:flex;justify-content:space-between;align-items:end;margin-top:14px}
+.price strong{font-size:1.4rem}
+.price small{display:block;color:var(--muted)}
+.face{color:var(--muted);text-decoration:line-through}
+button.primary,.btn{display:inline-block;border:0;background:var(--red);color:#fff;font-weight:700;padding:12px 18px;border-radius:10px;cursor:pointer;text-decoration:none;font:inherit}
+button.primary:hover{background:var(--red-dark)}
+button.secondary{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+form.app{display:grid;gap:14px;margin-top:18px}
+form.app label{font-weight:700;font-size:.85rem;display:block;margin-bottom:5px}
+form.app input,form.app select,form.app textarea{width:100%;padding:11px;background:var(--paper);border:1px solid var(--line);color:var(--ink);border-radius:8px;font:inherit}
+form.app textarea{min-height:90px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:620px){.two{grid-template-columns:1fr}}
+.fee-row,.total-row,.qty-row{display:flex;justify-content:space-between;padding:9px 0;gap:14px}
+.fee-row{color:var(--muted)}
+.total-row{border-top:1px solid var(--line);font-weight:700;font-size:1.1rem}
+.notice{border:1px solid color-mix(in srgb,var(--yellow) 65%,var(--line));background:color-mix(in srgb,var(--yellow) 16%,var(--card));padding:13px 15px;border-radius:10px;margin:16px 0}
+.err{color:var(--red-dark);font-weight:600}
+.ok{color:#12543b;font-weight:600}
+.fee-line{margin-top:22px;padding:13px 15px;background:var(--ink);color:var(--paper);border-radius:10px;font-weight:600}
+.signin{display:flex;gap:8px;align-items:center}
+.signin input{padding:9px;border-radius:8px;border:1px solid var(--line);background:var(--paper);color:var(--ink)}
+dialog{border:1px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);padding:22px;max-width:440px}
+code{font-family:"IBM Plex Mono",monospace;font-size:.85em}
