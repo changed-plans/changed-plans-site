@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Transfer desk — Changed Plans</title>
+<link rel="stylesheet" href="/app/assets/app.css" />
+<style>
+  .desk-section{margin-top:28px}
+  .desk-section h2{font-size:1.3rem;margin:0 0 4px}
+  table.desk{width:100%;border-collapse:collapse;margin-top:12px;font-size:.92rem}
+  table.desk th,table.desk td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  table.desk th{color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.05em}
+  .desk-actions{display:flex;gap:8px;flex-wrap:wrap}
+  button.small{padding:8px 12px;font-size:.88rem}
+  .empty{color:var(--muted);padding:12px 0}
+  .tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+</style>
+</head>
+<body>
+<header class="top"><nav class="nav">
+  <a class="brand" href="/app/index.html">Changed <em>Plans</em></a>
+  <a href="/app/index.html">Buy</a>
+  <a href="/app/sell.html">Sell tickets</a>
+  <a href="/app/order.html">My order</a>
+  <a href="/app/dispute.html">Help / dispute</a>
+  <a href="/app/admin.html" class="active">Desk</a>
+  <form class="signin" id="signin-form">
+    <input id="signin-email" type="email" placeholder="Email for sign-in link" required />
+    <button class="primary" type="submit">Sign in</button>
+  </form>
+  <span id="signin-out" class="micro"></span>
+</nav></header>
+
+<main class="wrap">
+  <h1>The desk</h1>
+  <p class="lead">Every queue here is work a named human owes: verify the tickets we hold, move tickets to buyers, pay sellers only after delivery checks out, and answer disputes inside two business days. That's the Changed Plans Code, run as a desk.</p>
+  <div id="who" class="notice">Checking your sign-in…</div>
+  <div id="desk-out"></div>
+
+  <div class="tools">
+    <button class="primary secondary" id="btn-sweep" type="button">Release expired reservations</button>
+    <button class="primary secondary" id="btn-pricing" type="button">Run price drops</button>
+    <button class="primary secondary" id="btn-refresh" type="button">Refresh queues</button>
+  </div>
+  <div id="tool-out" style="margin-top:12px"></div>
+</main>
+
+<script src="/app/assets/app.js"></script>
+<script>
+const out = el('desk-out');
+const toolOut = el('tool-out');
+
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+async function post(path, body) {
+  return api(path, { method: 'POST', body: JSON.stringify(body || {}) });
+}
+
+async function verifyTransfer(transfer_id, action) {
+  try {
+    await post('/api/admin/verify-transfer', { transfer_id, action });
+    await load();
+  } catch (err) { showError(toolOut, err); }
+}
+
+async function markPaidOut(order_id) {
+  const ref = prompt('Bank / Zelle reference for this payout (goes in the audit trail):');
+  if (!ref) return;
+  try {
+    await post('/api/admin/mark-paid-out', { order_id, external_ref: ref });
+    toolOut.innerHTML = '<p class="ok">Payout recorded.</p>';
+    await load();
+  } catch (err) { showError(toolOut, err); }
+}
+window.verifyTransfer = verifyTransfer;
+window.markPaidOut = markPaidOut;
+
+function table(headers, rows) {
+  if (!rows.length) return '<p class="empty">Nothing waiting. Good desk.</p>';
+  return `<table class="desk"><thead><tr>${headers.map((h) => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table>`;
+}
+
+async function load() {
+  let me;
+  try { me = await api('/api/auth/me'); } catch { me = { user: null }; }
+  const who = el('who');
+  if (!me.user) {
+    who.innerHTML = 'You are not signed in. Sign in (top right) with an admin account to work the desk.';
+    out.innerHTML = '';
+    return;
+  }
+  let q;
+  try {
+    q = await api('/api/admin/queue');
+  } catch (err) {
+    who.innerHTML = `Signed in as <strong>${esc(me.user.displayName || me.user.email)}</strong> — this account is not an admin, so the desk stays closed.`;
+    out.innerHTML = '';
+    return;
+  }
+  who.innerHTML = `Working the desk as <strong>${esc(q.admin.displayName || q.admin.email)}</strong>. Every action you take is recorded under this name.`;
+
+  const inboundRows = q.inbound.map((t) => `<tr>
+      <td><strong>${esc(t.event_name)}</strong><br/><span class="meta">${esc(t.seats)} · ${t.qty} ticket(s) · face ${esc(t.face_value)}</span></td>
+      <td>${esc(t.step)}</td>
+      <td><div class="desk-actions">
+        ${t.step === 'requested' ? `<button class="primary small" onclick="verifyTransfer('${t.transfer_id}','mark_received')">Mark received</button>` : ''}
+        ${t.step === 'received' ? `<button class="primary small" onclick="verifyTransfer('${t.transfer_id}','verify')">Verify — go live</button>` : ''}
+      </div></td></tr>`).join('');
+
+  const outboundRows = q.outbound.map((t) => `<tr>
+      <td><strong>${esc(t.event_name)}</strong><br/><span class="meta">${esc(t.seats)} · to ${esc(t.buyer_email)} · held ${esc(t.held_amount)}</span></td>
+      <td>${esc(t.step)}</td>
+      <td><div class="desk-actions">
+        ${t.step === 'queued' ? `<button class="primary small" onclick="verifyTransfer('${t.transfer_id}','mark_sent')">Mark sent</button>` : ''}
+        ${t.step === 'sent' ? `<button class="primary small" onclick="verifyTransfer('${t.transfer_id}','confirm')">Confirm delivered</button>` : ''}
+      </div></td></tr>`).join('');
+
+  const payoutRows = q.payouts.map((p) => `<tr>
+      <td><strong>${esc(p.event_name)}</strong><br/><span class="meta">to ${esc(p.seller_email)} · ${esc(p.method)}</span></td>
+      <td>${esc(p.amount)}</td>
+      <td><button class="primary small" onclick="markPaidOut('${p.order_id}')">Record payout</button></td></tr>`);
+
+  const disputeRows = q.disputes.map((d) => `<tr>
+      <td><strong>${esc(d.category.replace(/_/g, ' '))}</strong><br/><span class="meta">${esc(d.description)}</span></td>
+      <td>order ${esc(d.order_status)}<br/><span class="meta">answer by ${new Date(d.answer_by).toLocaleString()}</span></td>
+      <td><a class="btn secondary small" href="/app/order.html?id=${encodeURIComponent(d.order_id)}">View order</a></td></tr>`);
+
+  out.innerHTML = `
+    <section class="desk-section"><h2>1 · Inbound verifications</h2>
+      <p class="meta">Tickets sellers sent us. Nothing is buyable until it's verified here (Code #4).</p>
+      ${table(['Listing', 'Step', 'Action'], inboundRows)}
+    </section>
+    <section class="desk-section"><h2>2 · Outbound transfers</h2>
+      <p class="meta">Paid orders. The buyer's money stays held until delivery is confirmed (Code #5).</p>
+      ${table(['Order', 'Step', 'Action'], outboundRows)}
+    </section>
+    <section class="desk-section"><h2>3 · Payouts due</h2>
+      <p class="meta">Verified orders. Pay the seller from the business account, then record the reference.</p>
+      ${table(['Payout', 'Amount', 'Action'], payoutRows)}
+    </section>
+    <section class="desk-section"><h2>4 · Disputes</h2>
+      <p class="meta">Soonest deadline first. A named human answers within two business days (Code #8). Refunds are decided against the published Code.</p>
+      ${table(['Dispute', 'Clock', ''], disputeRows)}
+    </section>`;
+}
+
+el('btn-refresh').addEventListener('click', load);
+el('btn-sweep').addEventListener('click', async () => {
+  try {
+    const r = await post('/api/admin/sweep');
+    toolOut.innerHTML = `<p class="ok">Sweep done: ${r.released_count} expired reservation(s) released.</p>`;
+    await load();
+  } catch (err) { showError(toolOut, err); }
+});
+el('btn-pricing').addEventListener('click', async () => {
+  try {
+    const r = await post('/api/admin/run-pricing');
+    toolOut.innerHTML = r.changed.length
+      ? `<p class="ok">Price drops applied: ${r.changed.map((c) => `${esc(c.listing_id)} → ${'$' + (c.to_cents / 100).toFixed(2)} (${esc(c.floor_kind)} floor)`).join('; ')}</p>`
+      : '<p class="ok">Price engine ran: no drops due.</p>';
+    await load();
+  } catch (err) { showError(toolOut, err); }
+});
+
+load();
+</script>
+</body>
+</html>
