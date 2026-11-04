@@ -30,7 +30,13 @@ const SESSION_SECRET = process.env.SESSION_SECRET || 'LOCAL-DEV-PLACEHOLDER-CHAN
 const ADMIN_TOKEN = process.env.ADMIN_TOKEN || 'LOCAL-DEV-ADMIN-TOKEN';
 const IS_LOCAL = (process.env.APP_ENV || 'local') === 'local';
 
-if (!IS_LOCAL && (SESSION_SECRET.includes('PLACEHOLDER') || ADMIN_TOKEN.includes('LOCAL-DEV'))) {
+// ADMIN_TOKEN is intentionally UNSET in production (ENV-CHECKLIST: local-dev
+// fallback only, "do not set it in Netlify"), so its unset fallback value must
+// not trip this guard — only a token that is actually set to a placeholder
+// does. SESSION_SECRET, by contrast, is required in production, so its unset
+// fallback ('PLACEHOLDER…') correctly refuses boot.
+const adminTokenPlaceholder = Boolean(process.env.ADMIN_TOKEN) && ADMIN_TOKEN.includes('LOCAL-DEV');
+if (!IS_LOCAL && (SESSION_SECRET.includes('PLACEHOLDER') || adminTokenPlaceholder)) {
   throw new Error('Refusing to run outside local mode with placeholder secrets.');
 }
 
