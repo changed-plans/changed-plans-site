@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Checkout — Changed Plans</title>
+<link rel="stylesheet" href="/app/assets/app.css" />
+</head>
+<body>
+<header class="top"><nav class="nav">
+  <a class="brand" href="/app/index.html">Changed <em>Plans</em></a>
+  <a href="/app/index.html">Buy</a>
+  <a href="/app/sell.html">Sell tickets</a>
+  <a href="/app/order.html">My order</a>
+  <a href="/app/dispute.html">Help / dispute</a>
+  <a href="/app/admin.html">Desk</a>
+  <form class="signin" id="signin-form">
+    <input id="signin-email" type="email" placeholder="Email for sign-in link" required />
+    <button class="primary" type="submit">Sign in</button>
+  </form>
+  <span id="signin-out" class="micro"></span>
+</nav></header>
+
+<main class="wrap">
+  <h1>Checkout</h1>
+  <p class="lead">The price you see is the price you pay — the full breakdown is below before you pay anything. Sign in first (top right); payment itself happens on Stripe's secure page.</p>
+  <div class="fee-line">Face value or less, never above. The only extra cost is a 14% buyer fee — and your first transaction is free.</div>
+
+  <section class="card" id="summary"><p class="meta">Loading…</p></section>
+  <div id="checkout-out"></div>
+
+  <!-- Local stub panel: only rendered after a STUB checkout (no Stripe key).
+       Lets a developer simulate the webhook that marks the order paid. -->
+  <section class="card" id="stub-panel" hidden>
+    <h3>Stub mode — simulate payment</h3>
+    <p class="meta">No Stripe key is configured, so checkout was simulated. In production, Stripe's webhook does this automatically after real payment.</p>
+    <button class="primary" id="stub-pay">Simulate successful payment (fires webhook)</button>
+    <div id="stub-out"></div>
+  </section>
+</main>
+
+<script src="/app/assets/app.js"></script>
+<script>
+(async () => {
+  const summary = el('summary');
+  const out = el('checkout-out');
+
+  // Returning from a stub checkout: offer the webhook simulation.
+  if (qs('stub') === '1' && qs('order')) {
+    summary.innerHTML = `<h3>Order <code>${qs('order')}</code> reserved</h3>
+      <p class="meta">In stub mode there is no real Stripe page. Use the panel below to simulate the payment webhook, then watch the order advance.</p>`;
+    el('stub-panel').hidden = false;
+    el('stub-pay').addEventListener('click', async () => {
+      const o = el('stub-out');
+      o.textContent = 'Firing webhook…';
+      try {
+        await fetch('/api/stripe-webhook', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            type: 'checkout.session.completed',
+            data: { object: { id: qs('session'), payment_intent: 'pi_stub_' + qs('order'), metadata: { order_id: qs('order') } } },
+          }),
+        });
+        o.innerHTML = `<p class="ok">Payment simulated.</p><p><a class="btn" href="/app/order.html?id=${qs('order')}">View order status</a></p>`;
+      } catch (err) { showError(o, err); }
+    });
+    return;
+  }
+
+  const id = qs('id');
+  if (!id) { summary.innerHTML = '<p class="err">No listing selected.</p>'; return; }
+  try {
+    const { listings } = await api('/api/listings');
+    const l = listings.find((x) => x.id === id);
+    if (!l) { summary.innerHTML = '<p class="err">This listing is no longer available.</p>'; return; }
+    const priceTotal = l.price_cents * l.qty;
+    summary.innerHTML = `
+      <p class="micro">${l.category.toUpperCase()} · ${l.location}</p>
+      <h3 style="margin:4px 0">${l.event_name}</h3>
+      <p class="meta">${new Date(l.event_date).toLocaleString()} · ${l.venue} · ${l.seats}</p>
+      <div class="restrictions"><strong>Good to know before you buy:</strong> ${l.restrictions}</div>
+      <div class="qty-row"><span>${l.qty} ticket(s) × ${l.price}</span><span>${money(priceTotal)}</span></div>
+      <div class="fee-row"><span>Face value total</span><span>${money(l.face_value_cents * l.qty)}</span></div>
+      <div class="fee-row"><span>Buyer fee (14%)</span><span>calculated at payment — waived if this is your first transaction</span></div>
+      <div class="total-row"><span>You pay at most</span><span>${money(priceTotal + Math.round(priceTotal * 0.14))}</span></div>
+      <p class="meta">Your exact total (with any first-transaction waiver applied) is confirmed by the order before you are redirected to Stripe — nothing is charged on this page.</p>
+      <button class="primary" id="pay-btn">Continue to secure payment</button>`;
+    el('pay-btn').addEventListener('click', async () => {
+      out.textContent = 'Creating your order…';
+      try {
+        const data = await api('/api/checkout', { method: 'POST', body: JSON.stringify({ listing_id: l.id }) });
+        out.innerHTML = `<p class="ok">Order <code>${data.order_id}</code> — total charged at Stripe: <strong>${money(data.quote.total_cents)}</strong>${data.quote.fee_waived ? ' (buyer fee waived — first transaction)' : ''}. Redirecting…</p>`;
+        setTimeout(() => { location.href = data.checkout_url; }, 900);
+      } catch (err) { showError(out, err); }
+    });
+  } catch (err) { showError(summary, err); }
+})();
+</script>
+</body>
+</html>
