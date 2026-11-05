@@ -15,6 +15,8 @@
   button.small{padding:8px 12px;font-size:.88rem}
   .empty{color:var(--muted);padding:12px 0}
   .tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+  ol.steps{margin:10px 0 2px;padding-left:22px;font-size:.95rem}
+  ol.steps li{margin:5px 0}
 </style>
 </head>
 <body>
@@ -140,15 +142,30 @@ async function load() {
       ${table(['Listing', 'Total', 'Hold clock'], holdRows)}
     </section>
     <section class="desk-section"><h2>1 · Inbound verifications</h2>
-      <p class="meta">The seller has transferred their tickets to the Changed Plans Ticketmaster account (seugeneb@comcast.net). Open Ticketmaster and check the tickets are really in our account — then Mark received, then Verify. The listing goes on sale only at that moment; nothing can be bought before we've got the tickets in hand (Code #4).</p>
+      <p class="meta">A seller wants to list with us. Their tickets come to us first, and nothing goes on sale until they're in our hands (Code #4):</p>
+      <ol class="steps">
+        <li>Open the Ticketmaster app. The tickets should be sitting in the <strong>Changed Plans account</strong> (seugeneb@comcast.net), transferred by the seller.</li>
+        <li>Check they're really there — right event, right seats, right count. Then click <strong>Mark received</strong> on the listing's row.</li>
+        <li>Click <strong>Verify — go live</strong>. Only now can anyone buy them.</li>
+      </ol>
       ${table(['Listing', 'Step', 'Action'], inboundRows)}
     </section>
     <section class="desk-section"><h2>2 · Outbound transfers</h2>
-      <p class="meta">The buyer has paid, and their money is being held — not released. Now the tickets move: in the Ticketmaster app, transfer them from the Changed Plans account to the buyer's email, then click “I've sent the tickets.” When the buyer has accepted the transfer (in Ticketmaster the tickets show as claimed), click “Buyer has them — confirm delivered.” Only then does the seller's payout come due (Code #5).</p>
+      <p class="meta">The buyer has paid, and their money is <strong>held — not released</strong>. Now the tickets move. Work each paid order through these steps:</p>
+      <ol class="steps">
+        <li>In the Ticketmaster app, <strong>transfer the tickets</strong> from the Changed Plans account to the buyer's email.</li>
+        <li>Click <strong>I've sent the tickets</strong> on the order's row.</li>
+        <li><strong>Check the buyer accepted</strong> — in Ticketmaster, the tickets show as claimed by the buyer.</li>
+        <li>Click <strong>Buyer has them — confirm delivered</strong>. The seller's payout then appears under Payouts due (Code #5).</li>
+      </ol>
       ${table(['Order', 'Step', 'Action'], outboundRows)}
     </section>
     <section class="desk-section"><h2>3 · Payouts due</h2>
-      <p class="meta">Delivery is confirmed, so the seller's money is now due. Pay them the full amount from the BOA business account, then click Record payout and enter the bank/Zelle reference — that entry is what closes the order in our books.</p>
+      <p class="meta">Delivery is confirmed, so the seller's money is now due:</p>
+      <ol class="steps">
+        <li><strong>Pay the seller</strong> the full amount from the BOA business account.</li>
+        <li>Click <strong>Record payout</strong> and enter the bank/Zelle reference. That entry closes the order in our books.</li>
+      </ol>
       ${table(['Payout', 'Amount', 'Action'], payoutRows)}
     </section>
     <section class="desk-section"><h2>4 · Disputes</h2>
