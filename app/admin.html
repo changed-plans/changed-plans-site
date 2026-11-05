@@ -118,10 +118,10 @@ async function load() {
 
   const outboundRows = q.outbound.map((t) => `<tr>
       <td><strong>${esc(t.event_name)}</strong><br/><span class="meta">${esc(t.seats)} · to ${esc(t.buyer_email)} · held ${esc(t.held_amount)}</span></td>
-      <td>${esc(t.step)}</td>
+      <td>${t.step === 'queued' ? 'Not sent yet — transfer the tickets' : 'Sent — waiting for the buyer to accept'}</td>
       <td><div class="desk-actions">
-        ${t.step === 'queued' ? `<button class="primary small" onclick="verifyTransfer('${t.transfer_id}','mark_sent')">Mark sent</button>` : ''}
-        ${t.step === 'sent' ? `<button class="primary small" onclick="verifyTransfer('${t.transfer_id}','confirm')">Confirm delivered</button>` : ''}
+        ${t.step === 'queued' ? `<button class="primary small" onclick="verifyTransfer('${t.transfer_id}','mark_sent')">I've sent the tickets</button>` : ''}
+        ${t.step === 'sent' ? `<button class="primary small" onclick="verifyTransfer('${t.transfer_id}','confirm')">Buyer has them — confirm delivered</button>` : ''}
       </div></td></tr>`).join('');
 
   const payoutRows = q.payouts.map((p) => `<tr>
@@ -140,15 +140,15 @@ async function load() {
       ${table(['Listing', 'Total', 'Hold clock'], holdRows)}
     </section>
     <section class="desk-section"><h2>1 · Inbound verifications</h2>
-      <p class="meta">Tickets sellers sent us. Nothing is buyable until it's verified here (Code #4).</p>
+      <p class="meta">The seller has transferred their tickets to the Changed Plans Ticketmaster account (seugeneb@comcast.net). Open Ticketmaster and check the tickets are really in our account — then Mark received, then Verify. The listing goes on sale only at that moment; nothing can be bought before we've got the tickets in hand (Code #4).</p>
       ${table(['Listing', 'Step', 'Action'], inboundRows)}
     </section>
     <section class="desk-section"><h2>2 · Outbound transfers</h2>
-      <p class="meta">Paid orders. The buyer's money stays held until delivery is confirmed (Code #5).</p>
+      <p class="meta">The buyer has paid, and their money is being held — not released. Now the tickets move: in the Ticketmaster app, transfer them from the Changed Plans account to the buyer's email, then click “I've sent the tickets.” When the buyer has accepted the transfer (in Ticketmaster the tickets show as claimed), click “Buyer has them — confirm delivered.” Only then does the seller's payout come due (Code #5).</p>
       ${table(['Order', 'Step', 'Action'], outboundRows)}
     </section>
     <section class="desk-section"><h2>3 · Payouts due</h2>
-      <p class="meta">Verified orders. Pay the seller from the business account, then record the reference.</p>
+      <p class="meta">Delivery is confirmed, so the seller's money is now due. Pay them the full amount from the BOA business account, then click Record payout and enter the bank/Zelle reference — that entry is what closes the order in our books.</p>
       ${table(['Payout', 'Amount', 'Action'], payoutRows)}
     </section>
     <section class="desk-section"><h2>4 · Disputes</h2>
