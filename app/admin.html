@@ -103,6 +103,11 @@ async function load() {
   }
   who.innerHTML = `Working the desk as <strong>${esc(q.admin.displayName || q.admin.email)}</strong>. Every action you take is recorded under this name.`;
 
+  const holdRows = (q.holds || []).map((h) => `<tr>
+      <td><strong>${esc(h.event_name)}</strong><br/><span class="meta">${esc(h.seats)} · buyer ${esc(h.buyer_email)}</span></td>
+      <td>${esc(h.total)}</td>
+      <td>${h.expired ? '<strong>EXPIRED — release it below</strong>' : esc(h.minutes_left) + ' min left'}</td></tr>`).join('');
+
   const inboundRows = q.inbound.map((t) => `<tr>
       <td><strong>${esc(t.event_name)}</strong><br/><span class="meta">${esc(t.seats)} · ${t.qty} ticket(s) · face ${esc(t.face_value)}</span></td>
       <td>${esc(t.step)}</td>
@@ -130,6 +135,10 @@ async function load() {
       <td><a class="btn secondary small" href="/app/order.html?id=${encodeURIComponent(d.order_id)}">View order</a></td></tr>`);
 
   out.innerHTML = `
+    <section class="desk-section"><h2>Active holds</h2>
+      <p class="meta">Orders inside their 15-minute reservation window. A hold that outlives its window is stuck — clear it with “Release expired reservations” below.</p>
+      ${table(['Listing', 'Total', 'Hold clock'], holdRows)}
+    </section>
     <section class="desk-section"><h2>1 · Inbound verifications</h2>
       <p class="meta">Tickets sellers sent us. Nothing is buyable until it's verified here (Code #4).</p>
       ${table(['Listing', 'Step', 'Action'], inboundRows)}
