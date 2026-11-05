@@ -13,7 +13,7 @@ const { sweepExpiredReservations } = require('./_lib/sweep');
 
 exports.handler = async () => {
   const result = await sweepExpiredReservations('scheduled-sweep');
-  if (result.released_count) console.log('[scheduled-sweep]', JSON.stringify(result));
+  console.log('[scheduled-sweep]', JSON.stringify(result)); // log EVERY run — invocation evidence (2026-11-04)
   return { statusCode: 200, body: JSON.stringify(result) };
 };
 
