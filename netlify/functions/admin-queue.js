@@ -7,6 +7,11 @@
  *   outbound — paid orders whose buyer is waiting for the ticket
  *   payouts  — verified orders whose seller is waiting for money (Code #5)
  *   disputes — open disputes, soonest deadline first (Code #8)
+ *   holds    — orders in `reserved`, inside (or past) their 15-minute hold;
+ *              listed so a stuck reservation is VISIBLE, not just inferable
+ *              from a listing vanishing off the Buy page (added 2026-11-04
+ *              after a Stripe-failed checkout stranded a hold for 2 hours
+ *              with no scheduler to release it and no desk view of it).
  */
 const db = require('./_lib/db');
 const { ok, forbidden, serverError } = require('./_lib/http');
@@ -67,6 +72,25 @@ exports.handler = async (event) => {
       assigned_to: r.assigned_to, answer_by: r.due_at,
     }));
 
-    return ok({ admin: auth.publicUser(admin), inbound, outbound, payouts, disputes });
+    const holds = (await db.all(
+      `SELECT o.id AS order_id, o.total_cents, o.reserved_until,
+              l.event_name, l.seats, bu.email AS buyer_email
+         FROM orders o
+         JOIN listings l ON l.id = o.listing_id
+         JOIN users bu ON bu.id = o.buyer_id
+        WHERE o.status = 'reserved'
+        ORDER BY o.reserved_until ASC`
+    )).map((r) => {
+      const msLeft = Date.parse(r.reserved_until) - Date.now();
+      return {
+        order_id: r.order_id, event_name: r.event_name, seats: r.seats,
+        buyer_email: r.buyer_email, total: formatCents(r.total_cents),
+        reserved_until: r.reserved_until,
+        minutes_left: Math.max(0, Math.round(msLeft / 60000)),
+        expired: msLeft <= 0,
+      };
+    });
+
+    return ok({ admin: auth.publicUser(admin), inbound, outbound, payouts, disputes, holds });
   } catch (err) { return serverError(err); }
 };
