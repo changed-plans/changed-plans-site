@@ -77,8 +77,17 @@ async function markPaidOut(order_id) {
     await load();
   } catch (err) { showError(toolOut, err); }
 }
+async function discardListing(listing_id) {
+  if (!confirm('Discard this listing?\n\nIt was never verified and never went on sale. This removes it from the desk permanently.')) return;
+  try {
+    await post('/api/admin/discard-listing', { listing_id });
+    toolOut.innerHTML = '<p class="ok">Listing discarded.</p>';
+    await load();
+  } catch (err) { showError(toolOut, err); }
+}
 window.verifyTransfer = verifyTransfer;
 window.markPaidOut = markPaidOut;
+window.discardListing = discardListing;
 
 function table(headers, rows) {
   const arr = Array.isArray(rows) ? rows : (rows ? [rows] : []);
@@ -116,6 +125,7 @@ async function load() {
       <td><div class="desk-actions">
         ${t.step === 'requested' ? `<button class="primary small" onclick="verifyTransfer('${t.transfer_id}','mark_received')">Mark received</button>` : ''}
         ${t.step === 'received' ? `<button class="primary small" onclick="verifyTransfer('${t.transfer_id}','verify')">Verify — go live</button>` : ''}
+        <button class="primary small secondary" onclick="discardListing('${t.listing_id}')">Discard</button>
       </div></td></tr>`).join('');
 
   const outboundRows = q.outbound.map((t) => `<tr>
