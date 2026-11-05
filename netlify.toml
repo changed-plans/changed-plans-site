@@ -66,6 +66,10 @@
   from = "/api/admin/run-pricing"
   to = "/.netlify/functions/admin-price-run"
   status = 200
+[[redirects]]
+  from = "/api/admin/discard-listing"
+  to = "/.netlify/functions/admin-discard-listing"
+  status = 200
 
 # SCHEDULED FUNCTIONS — no redirects (Netlify invokes them on cron):
 #   scheduled-sweep.js    every 5 min   (exports.config.schedule)
