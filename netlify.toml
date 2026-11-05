@@ -71,4 +71,13 @@
 #   scheduled-sweep.js    every 5 min   (exports.config.schedule)
 #   scheduled-pricing.js  every 15 min  (exports.config.schedule)
 
-# redeploy 2026-11-04T00:33Z - pick up corrected DATABASE_URL
+# SCHEDULED FUNCTIONS — declared HERE because Netlify did not pick up the
+# in-file exports.config schedules (functions deployed as plain HTTP
+# endpoints, never invoked; diagnosed 2026-11-04 from the console: both had
+# endpoint URLs and zero invocations). Support-forum-documented fix.
+[functions."scheduled-sweep"]
+  schedule = "*/5 * * * *"
+
+[functions."scheduled-pricing"]
+  schedule = "*/15 * * * *"
+
