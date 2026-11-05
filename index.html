@@ -47,6 +47,7 @@
     .scar-diag h3{margin:0 0 8px;font-size:1.25rem;color:var(--yellow)}
     .scar-diag p{margin:0 0 10px;font-size:.98rem;line-height:1.6}
     .scar-diag p:last-child{margin-bottom:0}
+    .concierge-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:26px}.concierge-card{border:1px solid var(--line);background:var(--card);padding:22px 20px;border-radius:14px}.concierge-card strong{display:block;font-size:1.08rem;margin-bottom:7px}.concierge-card p{color:var(--muted);font-size:.93rem;line-height:1.55;margin:0}@media(max-width:850px){.concierge-cards{grid-template-columns:1fr}}
     .scar-diag b{color:#fff}
     .browse-head{padding:52px 0 24px}.browse-head h2,.form-page h2{font-size:clamp(2.7rem,6vw,5rem);letter-spacing:-.055em;line-height:.95;margin:0 0 16px}.filter-panel{background:var(--card);border:1px solid var(--line);padding:18px;border-radius:14px;display:grid;grid-template-columns:2fr repeat(4,1fr);gap:11px;margin-bottom:26px}.field label{display:block;font-size:.72rem;font-weight:700;color:var(--muted);margin:0 0 5px}.field input,.field select{width:100%;background:var(--paper);color:var(--ink);border:1px solid var(--line);padding:10px;border-radius:8px}.toggle-wrap{display:flex;align-items:end}.toggle-btn{width:100%;border:1px solid var(--line);background:var(--paper);color:var(--muted);padding:10px;border-radius:8px;cursor:pointer}.toggle-btn.on{background:var(--mint);color:var(--ink);border-color:transparent}.results-row{display:flex;justify-content:space-between;margin-bottom:15px}.empty{grid-column:1/-1;text-align:center;padding:60px;border:1px dashed var(--line);color:var(--muted)}
     .form-page{padding:54px 0 80px}.form-layout{display:grid;grid-template-columns:1fr .7fr;gap:44px}.form-card{background:var(--card);border:1px solid var(--line);padding:28px;border-radius:16px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.form-grid .wide{grid-column:1/-1}.form-card label{display:block;font-weight:700;font-size:.82rem;margin:0 0 6px}.form-card input,.form-card select,.form-card textarea{width:100%;padding:12px;background:var(--paper);border:1px solid var(--line);color:var(--ink);border-radius:8px}.form-card textarea{min-height:95px;resize:vertical}.form-note{background:color-mix(in srgb,var(--yellow) 18%,var(--card));padding:22px;border-radius:12px;align-self:start}.form-note h3{margin-top:0}.form-note p,.form-note li{color:var(--muted)}.checkline{display:flex!important;gap:10px;align-items:flex-start}.checkline input{width:auto;margin-top:5px}.success-box{padding:40px 20px;text-align:center}.success-box h2{font-size:2rem;margin-bottom:8px}
@@ -137,6 +138,21 @@
           <div class="step"><span class="num">02</span><h3>Sell it</h3><p>A nearby fan finds your listing and checks out with a clear fee breakdown.</p></div>
           <div class="step"><span class="num">03</span><h3>Get paid</h3><p>In the future marketplace, payment would release after a verified ticket transfer.</p></div>
         </div></div>
+      </section>
+      <section class="concierge">
+        <div class="wrap">
+          <p class="micro" style="color:var(--red-dark)">SELLING, WITH A PERSON ATTACHED</p>
+          <div class="section-head"><h2>You don’t sell alone here.</h2><p>Changed Plans is a working marketplace — real listings, real checkout, your buyer’s payment held safely until the transfer checks out. But selling with us isn’t a dashboard you figure out by yourself. It’s a person.</p></div>
+          <p style="max-width:720px;font-size:1.05rem;line-height:1.6;margin:0">When you sell here, Scott — the founder — walks it with you, end to end:</p>
+          <div class="concierge-cards">
+            <div class="concierge-card"><strong>A real conversation first</strong><p>What the tickets are, what you need to actually pocket, and what you’d take on the morning of the event if they haven’t sold. Three numbers, settled up front, so there are no surprises later.</p></div>
+            <div class="concierge-card"><strong>We build the listing with you</strong><p>Your tickets are transferred, held, and verified before they’re ever offered for sale — that’s the rule that keeps buyers safe and your sale clean.</p></div>
+            <div class="concierge-card"><strong>We take it to where the fans are</strong><p>The right fan groups and communities for your event, not just a listing waiting to be found.</p></div>
+            <div class="concierge-card"><strong>We handle the handoff</strong><p>The buyer’s payment stays held until the transfer is confirmed. Then you’re paid — the full price. Our fee is on the buyer, never out of your pocket.</p></div>
+          </div>
+          <p style="margin:26px 0 8px"><button class="primary" data-go="sell">Sell a ticket instead</button></p>
+          <p class="meta" style="max-width:640px">Face value or less, never above. The only extra cost is a 14% buyer fee — and your first transaction is free.</p>
+        </div>
       </section>
       <section class="ate">
         <div class="wrap">
@@ -245,7 +261,7 @@
           <div class="wide"><button class="primary full" type="submit">Ask the founder to help sell these</button></div>
           <p id="sellStatus" class="inline-status wide" role="status" aria-live="polite" hidden></p>
         </div></form>
-        <aside class="form-note"><h3>Your first sale gets the founder treatment.</h3><p>Submit the details and the founder will personally reach out to help with the listing, buyer match and ticket handoff.</p><h3>Founding-member benefit</h3><p><strong>Your first transaction is free.</strong> The usual 14% service fee is waived while we help our earliest users get started.</p><h3>Still an early marketplace</h3><p>Browsing remains a public concept preview. Tickets are not automatically published and no payment is taken on this page.</p></aside>
+        <aside class="form-note"><h3>Selling here comes with a person.</h3><p>Scott, the founder, helps you price it, list it, find the fans, and complete the handoff — and you’re paid in full once the transfer is confirmed. Face value or less, never above. The only extra cost is a 14% buyer fee — and your first transaction is free.</p><h3>Founding-member benefit</h3><p><strong>Your first transaction is free.</strong> The usual 14% service fee is waived while we help our earliest users get started.</p><h3>Still an early marketplace</h3><p>Browsing remains a public concept preview. Tickets are not automatically published and no payment is taken on this page.</p></aside>
       </div></div>
     </div>
 
