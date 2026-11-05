@@ -25,7 +25,7 @@ exports.handler = async (event) => {
     const inbound = (await db.all(
       `SELECT t.id AS transfer_id, t.status AS transfer_status_step, l.*
          FROM transfers t JOIN listings l ON l.id = t.listing_id
-        WHERE t.direction = 'inbound' AND t.status != 'verified'
+        WHERE t.direction = 'inbound' AND t.status != 'verified' AND l.status = 'awaiting_transfer'
         ORDER BY t.created_at ASC`
     )).map((r) => ({
       transfer_id: r.transfer_id, step: r.transfer_status_step,
