@@ -13,7 +13,7 @@ const { runPriceEngine } = require('./_lib/pricing');
 
 exports.handler = async () => {
   const result = await runPriceEngine('scheduled-pricing');
-  if (result.changed.length) console.log('[scheduled-pricing]', JSON.stringify(result));
+  console.log('[scheduled-pricing]', JSON.stringify(result)); // log EVERY run — invocation evidence (2026-11-04)
   return { statusCode: 200, body: JSON.stringify(result) };
 };
 
