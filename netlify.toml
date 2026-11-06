@@ -71,14 +71,6 @@
   to = "/.netlify/functions/admin-discard-listing"
   status = 200
 
-# TEMPORARY (2026-11-05): populated scheduler proof endpoint. Remove this
-# block, delete netlify/functions/proof-scheduler.js, and remove the
-# PROOF_SECRET env var when the proof is done.
-[[redirects]]
-  from = "/api/proof-scheduler"
-  to = "/.netlify/functions/proof-scheduler"
-  status = 200
-
 # SCHEDULED FUNCTIONS — no redirects (Netlify invokes them on cron):
 #   scheduled-sweep.js    every 5 min   (exports.config.schedule)
 #   scheduled-pricing.js  every 15 min  (exports.config.schedule)
