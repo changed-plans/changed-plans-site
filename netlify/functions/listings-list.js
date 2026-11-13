@@ -37,7 +37,7 @@ exports.handler = async () => {
         price: formatCents(l.price_cents),
         restrictions: l.restrictions,
         // The locked line, verbatim, for the page to display (Code #2):
-        fee_line: 'Face value or less, never above. The only extra cost is a 14% buyer fee — and your first transaction is free.',
+        fee_line: 'Face value or less, never above. The only extra cost is a 14% buyer fee, and your first transaction is free.',
       })),
     });
   } catch (err) { return serverError(err); }
