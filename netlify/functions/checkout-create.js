@@ -73,7 +73,7 @@ exports.handler = async (event) => {
         fee_waived: quote.feeWaived,
         total_cents: quote.totalCents,
       },
-      fee_line: 'Face value or less, never above. The only extra cost is a 14% buyer fee — and your first transaction is free.',
+      fee_line: 'Face value or less, never above. The only extra cost is a 14% buyer fee, and your first transaction is free.',
     });
   } catch (err) { return serverError(err); }
 };
